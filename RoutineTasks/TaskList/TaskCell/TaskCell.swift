@@ -7,7 +7,12 @@
 
 import UIKit
 
-class TaskTableViewCell: UITableViewCell {
+class TaskCell: UITableViewCell {
+    var viewModel: TaskCellViewModelProtocol! {
+        didSet {
+            nameTaskLabel.text = viewModel.taskName
+        }
+    }
     
     @IBOutlet var StackDaysButton: [UIButton]!
     @IBOutlet weak var nameTaskLabel: UILabel!

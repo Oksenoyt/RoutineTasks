@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NewItemViewController: UIViewController {
+class NewTaskViewController: UIViewController {
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet var itemColorStackButton: [UIButton]!
@@ -16,11 +16,15 @@ class NewItemViewController: UIViewController {
     @IBOutlet var scheduleStackButton: [UIButton]!
     @IBOutlet weak var createButton: UIButton!
     
+    var viewModel: NewTaskViewModelProtocol!
+    
     private var color = "#c49dcc"
     private var selectedDays = [true, true, true, true, true, true, true]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = NewTaskViewModel()
+        
         view.layer.cornerRadius = 30
         createButton.layer.cornerRadius = 15
         
@@ -56,6 +60,12 @@ class NewItemViewController: UIViewController {
     
     
     @IBAction func createButton(_ sender: UIButton) {
+        guard let name = nameTextField.text, !name.isEmpty else {
+                    showAlert(with: "Заполните название задачи")
+                    return
+                }
+        viewModel.addTask(name: name, color: color)
+        
         dismiss(animated: true)
     }
     
@@ -63,7 +73,7 @@ class NewItemViewController: UIViewController {
 
 
 //что запихивать в екстеншин?
-extension NewItemViewController {
+extension NewTaskViewController {
     private func showAlert(with title: String) {
         let alert = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
         let okAction = UIAlertAction(title: "OK", style: .default)

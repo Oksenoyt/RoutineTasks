@@ -8,7 +8,7 @@
 import UIKit
 
 
-class MainViewController: UIViewController {
+class TaskListViewController: UIViewController {
     
     @IBOutlet weak var settingsButton: UIBarButtonItem!
     @IBOutlet weak var addNewItemButton: UIBarButtonItem!
@@ -17,8 +17,21 @@ class MainViewController: UIViewController {
     @IBOutlet weak var taskListTableView: UITableView!
     @IBOutlet var dayLabels: [UILabel]!
     
+    private var viewModel: TaskListViewModelProtocol! {
+        didSet {
+            viewModel.fetchTasks { [weak self] in
+                self?.taskListTableView.reloadData()
+            }
+        }
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let observersViewModel = ObserversViewModel.shared
+        viewModel = TaskListViewModel(observersViewModel: observersViewModel)
+        
         taskListTableView.backgroundColor = #colorLiteral(red: 0.9536015391, green: 0.9351417422, blue: 0.9531318545, alpha: 1)
         taskListTableView.layer.cornerRadius = 30
         navigationItem.rightBarButtonItems = [addNewItemButton, editButtonItem]
@@ -34,15 +47,18 @@ class MainViewController: UIViewController {
 }
 
 // MARK: - UITableViewDataSource
-extension MainViewController: UITableViewDataSource {
+extension TaskListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        viewModel.numberOfRows()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellError = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath)
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath) as? TaskTableViewCell else { return cellError }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath)
+        guard let cell = cell as? TaskCell else { return UITableViewCell() }
+        cell.viewModel = viewModel.getTaskCellViewModel(at: indexPath)
+        
         return cell
+        
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
