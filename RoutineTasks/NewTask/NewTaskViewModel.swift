@@ -12,11 +12,11 @@ protocol NewTaskViewModelProtocol {
 }
 
 class NewTaskViewModel: NewTaskViewModelProtocol {
-    let observersViewModel = ObserversViewModel.shared
+    private let observersViewModel = ObserversViewModel.shared
     
     func addTask(name: String, color: String) {
         StorageManager.shared.createTask(name: name, color: color) { task in
-            observersViewModel.updateData(data: task)
+            observersViewModel.addData(data: task)
         }
     }
 }

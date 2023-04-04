@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ViewModelDelegate: AnyObject {
-   func dataDidChange()
+    func dataDidChange()
 }
 
 class TaskListViewController: UIViewController {
@@ -65,15 +65,47 @@ extension TaskListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        return UISwipeActionsConfiguration(actions: [])
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, _ in
+            self.viewModel.deleteTask(at: indexPath)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+        
+        let editAction = UIContextualAction(style: .normal, title: "Edit") { _, _, _ in
+            print("sdfsdfsdf")
+        }
+
+        deleteAction.backgroundColor = #colorLiteral(red: 0.7979423404, green: 0.6081361771, blue: 0.8128324151, alpha: 1)
+        editAction.backgroundColor = #colorLiteral(red: 0.7490196078, green: 0.831372549, blue: 0.8352941176, alpha: 1)
+        
+        return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
     }
     
 }
 
+extension TaskListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        UITableViewCell.EditingStyle.none
+    }
+
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        false
+    }
+
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+//                StorageManager.shared.updateTask(taskList, sourceIndexPath: sourceIndexPath.row, destinationIndexPath: destinationIndexPath.row) { tasks in
+//                    taskList = tasks
+    }
+}
+
+
 extension TaskListViewController: ViewModelDelegate {
     func dataDidChange() {
-          DispatchQueue.main.async {
-             self.taskListTableView.reloadData()
-          }
-       }
+        DispatchQueue.main.async {
+            self.taskListTableView.reloadData()
+        }
+    }
 }

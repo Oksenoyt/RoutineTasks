@@ -9,6 +9,7 @@ import Foundation
 
 protocol DataObserver: AnyObject {
     func didAddData(task: Task)
+    func didDeleteData(task: Task)
 }
 
 class ObserversViewModel {
@@ -25,9 +26,15 @@ class ObserversViewModel {
         observers.removeAll { $0 === observer }
     }
 
-    func updateData(data: Task) {
+    func addData(data: Task) {
         for observer in observers {
             observer.didAddData(task: data)
+        }
+    }
+    
+    func deleteData(data: Task) {
+        for observer in observers {
+            observer.didDeleteData(task: data)
         }
     }
 }
