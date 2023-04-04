@@ -11,6 +11,7 @@ class TaskCell: UITableViewCell {
     var viewModel: TaskCellViewModelProtocol! {
         didSet {
             nameTaskLabel.text = viewModel.taskName
+            
         }
     }
     

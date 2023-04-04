@@ -7,6 +7,9 @@
 
 import UIKit
 
+protocol ViewModelDelegate: AnyObject {
+   func dataDidChange()
+}
 
 class TaskListViewController: UIViewController {
     
@@ -19,12 +22,12 @@ class TaskListViewController: UIViewController {
     
     private var viewModel: TaskListViewModelProtocol! {
         didSet {
+            viewModel.delegate = self
             viewModel.fetchTasks { [weak self] in
                 self?.taskListTableView.reloadData()
             }
         }
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,4 +68,12 @@ extension TaskListViewController: UITableViewDataSource {
         return UISwipeActionsConfiguration(actions: [])
     }
     
+}
+
+extension TaskListViewController: ViewModelDelegate {
+    func dataDidChange() {
+          DispatchQueue.main.async {
+             self.taskListTableView.reloadData()
+          }
+       }
 }

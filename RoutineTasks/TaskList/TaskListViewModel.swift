@@ -8,17 +8,27 @@
 import Foundation
 
 protocol TaskListViewModelProtocol {
+    var delegate: ViewModelDelegate? { get set }
+    
     func fetchTasks(completion: @escaping() -> Void)
     func numberOfRows() -> Int
     func getTaskCellViewModel(at indexPath: IndexPath) -> TaskCellViewModelProtocol
 }
 
 class TaskListViewModel: TaskListViewModelProtocol {
-    private var tasks: [Task] = []
-
+    private var tasks: [Task] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.delegate?.dataDidChange()
+            }
+        }
+    }
+    
+    weak var delegate: ViewModelDelegate?
+    
     init(observersViewModel: ObserversViewModel) {
         observersViewModel.addObserver(observer: self)
-       }
+    }
     
     func fetchTasks(completion: @escaping () -> Void) {
         StorageManager.shared.fetchTasks { result in
@@ -46,7 +56,6 @@ extension TaskListViewModel: DataObserver {
     func didAddData(task: Task) {
         tasks.append(task)
     }
-
 }
 
 
