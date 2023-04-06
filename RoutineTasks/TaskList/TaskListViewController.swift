@@ -38,6 +38,7 @@ class TaskListViewController: UIViewController {
         taskListTableView.backgroundColor = #colorLiteral(red: 0.9536015391, green: 0.9351417422, blue: 0.9531318545, alpha: 1)
         taskListTableView.layer.cornerRadius = 30
         navigationItem.rightBarButtonItems = [addNewItemButton, editButtonItem]
+        setCalendar()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -47,6 +48,18 @@ class TaskListViewController: UIViewController {
         super.setEditing(editing, animated: true)
         taskListTableView.setEditing(editing, animated: true)
     }
+    
+    private func setCalendar() {
+        let calendar = viewModel.getCalendar(days: dayLabels.count)
+        
+        for dayLabel in dayLabels {
+            dayLabel.text = calendar[dayLabel.tag-1]
+            if dayLabel.tag == 3 {
+                dayLabel.font = .boldSystemFont(ofSize: 19)
+            }
+        }
+    }
+    
 }
 
 // MARK: - UITableViewDataSource
@@ -73,7 +86,7 @@ extension TaskListViewController: UITableViewDataSource {
         let editAction = UIContextualAction(style: .normal, title: "Edit") { _, _, _ in
             print("sdfsdfsdf")
         }
-
+        
         deleteAction.backgroundColor = #colorLiteral(red: 0.7979423404, green: 0.6081361771, blue: 0.8128324151, alpha: 1)
         editAction.backgroundColor = #colorLiteral(red: 0.7490196078, green: 0.831372549, blue: 0.8352941176, alpha: 1)
         
@@ -86,21 +99,20 @@ extension TaskListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
-
+    
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         UITableViewCell.EditingStyle.none
     }
-
+    
     func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
         false
     }
-
+    
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-//                StorageManager.shared.updateTask(taskList, sourceIndexPath: sourceIndexPath.row, destinationIndexPath: destinationIndexPath.row) { tasks in
-//                    taskList = tasks
+        //                StorageManager.shared.updateTask(taskList, sourceIndexPath: sourceIndexPath.row, destinationIndexPath: destinationIndexPath.row) { tasks in
+        //                    taskList = tasks
     }
 }
-
 
 extension TaskListViewController: ViewModelDelegate {
     func dataDidChange() {

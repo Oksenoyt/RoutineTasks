@@ -68,6 +68,23 @@ class StorageManager {
     }
     
     
+    // MARK: - CRUD SCHEDULE
+    private func createSchedule(_ taskTemp: Task, selectedDays: [Bool]) -> Task {
+            let task = taskTemp
+            let schedule = Schedule(context: viewContext)
+            schedule.task = task //переделать
+//            schedule.monday = selectedDays[0]
+//            schedule.tuesday = selectedDays[1]
+//            schedule.wednesday = selectedDays[2]
+//            schedule.thursday = selectedDays[3]
+//            schedule.friday = selectedDays[4]
+//            schedule.saturday = selectedDays[5]
+//            schedule.sunday = selectedDays[6]
+            
+            return task
+        }
+    
+    
     // MARK: - Core Data Saving support
         func saveContext() {
             if viewContext.hasChanges {

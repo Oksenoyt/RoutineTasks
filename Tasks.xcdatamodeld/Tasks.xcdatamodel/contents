@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="22C65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Task" representedClassName="Task" syncable="YES" codeGenerationType="class">
+    <entity name="CompletionDay" representedClassName="CompletionDay" syncable="YES" codeGenerationType="class">
+        <attribute name="day" optional="YES" attributeType="String"/>
+        <attribute name="isDone" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="Schedule" representedClassName="Schedule" parentEntity="Task" syncable="YES">
+        <attribute name="day" attributeType="String"/>
+        <attribute name="selected" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="task" maxCount="1" deletionRule="Nullify" destinationEntity="Task" inverseName="schedule" inverseEntity="Task"/>
+    </entity>
+    <entity name="Task" representedClassName="Task" syncable="YES">
         <attribute name="color" attributeType="String"/>
         <attribute name="title" attributeType="String"/>
+        <relationship name="schedule" toMany="YES" deletionRule="Cascade" destinationEntity="Schedule" inverseName="task" inverseEntity="Schedule"/>
     </entity>
 </model>

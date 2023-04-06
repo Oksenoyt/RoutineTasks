@@ -24,6 +24,10 @@
 		42ADF8F629DA13A700F5D711 /* ObserversViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42ADF8F529DA13A700F5D711 /* ObserversViewModel.swift */; };
 		42CEB7C528E9A0520081D037 /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CEB7C428E9A0520081D037 /* DateManager.swift */; };
 		42F289B4288E8F2700C5DF76 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42F289B3288E8F2700C5DF76 /* Colors.xcassets */; };
+		42F3C2E729DF457B00F8E6E2 /* Schedule+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F3C2E329DF457B00F8E6E2 /* Schedule+CoreDataClass.swift */; };
+		42F3C2E829DF457B00F8E6E2 /* Schedule+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F3C2E429DF457B00F8E6E2 /* Schedule+CoreDataProperties.swift */; };
+		42F3C2E929DF457B00F8E6E2 /* Task+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F3C2E529DF457B00F8E6E2 /* Task+CoreDataClass.swift */; };
+		42F3C2EA29DF457B00F8E6E2 /* Task+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F3C2E629DF457B00F8E6E2 /* Task+CoreDataProperties.swift */; };
 		42FE9E4E28E5F95C00A6F9D7 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FE9E4D28E5F95C00A6F9D7 /* StorageManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +51,10 @@
 		42ADF8F529DA13A700F5D711 /* ObserversViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObserversViewModel.swift; sourceTree = "<group>"; };
 		42CEB7C428E9A0520081D037 /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
 		42F289B3288E8F2700C5DF76 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		42F3C2E329DF457B00F8E6E2 /* Schedule+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Schedule+CoreDataClass.swift"; sourceTree = "<group>"; };
+		42F3C2E429DF457B00F8E6E2 /* Schedule+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Schedule+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		42F3C2E529DF457B00F8E6E2 /* Task+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+CoreDataClass.swift"; sourceTree = "<group>"; };
+		42F3C2E629DF457B00F8E6E2 /* Task+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		42FE9E4D28E5F95C00A6F9D7 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -64,6 +72,10 @@
 		4231D6A82869A33D000419BA = {
 			isa = PBXGroup;
 			children = (
+				42F3C2E329DF457B00F8E6E2 /* Schedule+CoreDataClass.swift */,
+				42F3C2E429DF457B00F8E6E2 /* Schedule+CoreDataProperties.swift */,
+				42F3C2E529DF457B00F8E6E2 /* Task+CoreDataClass.swift */,
+				42F3C2E629DF457B00F8E6E2 /* Task+CoreDataProperties.swift */,
 				4231D6B32869A33D000419BA /* RoutineTasks */,
 				42ADF8F029D9F1EF00F5D711 /* Tasks.xcdatamodeld */,
 				4231D6B22869A33D000419BA /* Products */,
@@ -240,9 +252,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				4231D6B92869A33D000419BA /* TaskListViewController.swift in Sources */,
+				42F3C2E929DF457B00F8E6E2 /* Task+CoreDataClass.swift in Sources */,
 				4231D6B52869A33D000419BA /* AppDelegate.swift in Sources */,
 				42FE9E4E28E5F95C00A6F9D7 /* StorageManager.swift in Sources */,
+				42F3C2EA29DF457B00F8E6E2 /* Task+CoreDataProperties.swift in Sources */,
 				42ADF8EF29D9F1AB00F5D711 /* NewTaskViewModel.swift in Sources */,
+				42F3C2E729DF457B00F8E6E2 /* Schedule+CoreDataClass.swift in Sources */,
 				426D579A288D5260003DC0BF /* TaskCell.swift in Sources */,
 				423BA0AF287AE4B000D00A71 /* NewTaskViewController.swift in Sources */,
 				42CEB7C528E9A0520081D037 /* DateManager.swift in Sources */,
@@ -250,6 +265,7 @@
 				42ADF8F229D9F1EF00F5D711 /* Tasks.xcdatamodeld in Sources */,
 				42ADF8EA29D9F06100F5D711 /* TaskListViewModel.swift in Sources */,
 				422672F02872DC4A00511C2E /* SettingsViewController.swift in Sources */,
+				42F3C2E829DF457B00F8E6E2 /* Schedule+CoreDataProperties.swift in Sources */,
 				42ADF8F629DA13A700F5D711 /* ObserversViewModel.swift in Sources */,
 				4231D6B72869A33D000419BA /* SceneDelegate.swift in Sources */,
 				42ADF8F429D9F34500F5D711 /* TaskCellViewModel.swift in Sources */,

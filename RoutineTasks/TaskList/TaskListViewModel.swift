@@ -16,13 +16,16 @@ protocol TaskListViewModelProtocol {
     func numberOfRows() -> Int
     func getTaskCellViewModel(at indexPath: IndexPath) -> TaskCellViewModelProtocol
     
+    func getCalendar(days: Int) -> [String]
+    
 }
 
 class TaskListViewModel: TaskListViewModelProtocol {
     
     private let observersViewModel = ObserversViewModel.shared
     private let storageManager = StorageManager.shared
-
+    private let date = DateManager()
+    
     private var tasks: [Task] = [] {
         didSet {
             DispatchQueue.main.async {
@@ -68,6 +71,19 @@ class TaskListViewModel: TaskListViewModelProtocol {
         tasks[indexPath.row]
     }
     
+    //проверить - - в передаче
+    func getCalendar(days: Int) -> [String] {
+        var dayLabels: [String] = []
+        var dayNumber = -2
+        
+        for _ in 0..<days {
+            let label = date.getDateString(dayBefore: -dayNumber, format: .d_EE)
+            dayLabels.append(label)
+            dayNumber += 1
+        }
+        
+        return dayLabels
+    }
 }
 
 extension TaskListViewModel: DataObserver {
