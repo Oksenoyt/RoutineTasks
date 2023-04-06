@@ -51,7 +51,6 @@ class TaskListViewController: UIViewController {
     
     private func setCalendar() {
         let calendar = viewModel.getCalendar(days: dayLabels.count)
-        
         for dayLabel in dayLabels {
             dayLabel.text = calendar[dayLabel.tag-1]
             if dayLabel.tag == 3 {

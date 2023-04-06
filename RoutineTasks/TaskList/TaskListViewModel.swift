@@ -74,14 +74,10 @@ class TaskListViewModel: TaskListViewModelProtocol {
     //проверить - - в передаче
     func getCalendar(days: Int) -> [String] {
         var dayLabels: [String] = []
-        var dayNumber = -2
-        
-        for _ in 0..<days {
-            let label = date.getDateString(dayBefore: -dayNumber, format: .d_EE)
+        for day in -2..<days-2 {
+            let label = date.getDateString(dayBefore: -day, format: .d_EE)
             dayLabels.append(label)
-            dayNumber += 1
         }
-        
         return dayLabels
     }
 }
