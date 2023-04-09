@@ -4,14 +4,13 @@
         <attribute name="day" optional="YES" attributeType="String"/>
         <attribute name="isDone" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
     </entity>
-    <entity name="Schedule" representedClassName="Schedule" parentEntity="Task" syncable="YES">
-        <attribute name="day" attributeType="String"/>
-        <attribute name="selected" attributeType="Boolean" usesScalarValueType="YES"/>
-        <relationship name="task" maxCount="1" deletionRule="Nullify" destinationEntity="Task" inverseName="schedule" inverseEntity="Task"/>
+    <entity name="Schedule" representedClassName="Schedule" syncable="YES">
+        <attribute name="day" optional="YES" attributeType="String"/>
+        <relationship name="task" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Task" inverseName="schedule" inverseEntity="Task"/>
     </entity>
     <entity name="Task" representedClassName="Task" syncable="YES">
         <attribute name="color" attributeType="String"/>
         <attribute name="title" attributeType="String"/>
-        <relationship name="schedule" toMany="YES" deletionRule="Cascade" destinationEntity="Schedule" inverseName="task" inverseEntity="Schedule"/>
+        <relationship name="schedule" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Schedule" inverseName="task" inverseEntity="Schedule"/>
     </entity>
 </model>

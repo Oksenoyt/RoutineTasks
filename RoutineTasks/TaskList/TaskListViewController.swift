@@ -12,11 +12,9 @@ protocol ViewModelDelegate: AnyObject {
 }
 
 class TaskListViewController: UIViewController {
-    
     @IBOutlet weak var settingsButton: UIBarButtonItem!
     @IBOutlet weak var addNewItemButton: UIBarButtonItem!
     @IBOutlet weak var backgroundView: UIView!
-    
     @IBOutlet weak var taskListTableView: UITableView!
     @IBOutlet var dayLabels: [UILabel]!
     
@@ -31,7 +29,7 @@ class TaskListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
         let observersViewModel = ObserversViewModel.shared
         viewModel = TaskListViewModel(observersViewModel: observersViewModel)
         
@@ -41,9 +39,7 @@ class TaskListViewController: UIViewController {
         setCalendar()
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    }
-    
+    //что это?
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: true)
         taskListTableView.setEditing(editing, animated: true)
@@ -71,9 +67,7 @@ extension TaskListViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath)
         guard let cell = cell as? TaskCell else { return UITableViewCell() }
         cell.viewModel = viewModel.getTaskCellViewModel(at: indexPath)
-        
         return cell
-        
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -85,13 +79,11 @@ extension TaskListViewController: UITableViewDataSource {
         let editAction = UIContextualAction(style: .normal, title: "Edit") { _, _, _ in
             print("sdfsdfsdf")
         }
-        
         deleteAction.backgroundColor = #colorLiteral(red: 0.7979423404, green: 0.6081361771, blue: 0.8128324151, alpha: 1)
         editAction.backgroundColor = #colorLiteral(red: 0.7490196078, green: 0.831372549, blue: 0.8352941176, alpha: 1)
         
         return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
     }
-    
 }
 
 extension TaskListViewController: UITableViewDelegate {

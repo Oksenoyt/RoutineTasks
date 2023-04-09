@@ -7,16 +7,6 @@
 
 import UIKit
 
-//enum dayWeek: String {
-//    case mo = "monday"
-//    case tu = "tuesday"
-//    case we
-//    case th
-//    case fr
-//    case sa
-//    case su
-//}
-
 class NewTaskViewController: UIViewController {
     
     @IBOutlet weak var nameTextField: UITextField!
@@ -29,7 +19,7 @@ class NewTaskViewController: UIViewController {
     var viewModel: NewTaskViewModelProtocol!
     
     private var color = "#c49dcc"
-//    private var selectedDays = []
+    private var selectedDays = [true, true, true, true, true, true, true]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,12 +50,12 @@ class NewTaskViewController: UIViewController {
     }
     
     @IBAction func scheduleButton(_ sender: UIButton) {
-//        selectedDays[sender.tag].toggle()
-//        if scheduleStackButton[sender.tag].tintColor != .gray {
-//            scheduleStackButton[sender.tag].tintColor = .gray
-//        } else {
-//            scheduleStackButton[sender.tag].tintColor = .systemBlue
-//        }
+        let stateOfTheDay = viewModel.selectedDaysDidChange(day: sender.tag)
+        if stateOfTheDay {
+            scheduleStackButton[sender.tag].tintColor = .systemBlue
+        } else {
+            scheduleStackButton[sender.tag].tintColor = .gray
+        }
     }
     
     

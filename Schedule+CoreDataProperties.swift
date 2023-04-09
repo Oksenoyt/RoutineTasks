@@ -2,7 +2,7 @@
 //  Schedule+CoreDataProperties.swift
 //  RoutineTasks
 //
-//  Created by Elenka on 06.04.2023.
+//  Created by Elenka on 08.04.2023.
 //
 //
 
@@ -16,8 +16,11 @@ extension Schedule {
         return NSFetchRequest<Schedule>(entityName: "Schedule")
     }
 
-    @NSManaged public var selected: Bool
-    @NSManaged public var day: String
+    @NSManaged public var day: String?
     @NSManaged public var task: Task?
+
+}
+
+extension Schedule : Identifiable {
 
 }

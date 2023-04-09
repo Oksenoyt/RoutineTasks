@@ -31,14 +31,14 @@ class DateManager {
             dateFormatter.dateFormat = "yyyy-MM-dd"
             dataFormatted = dateFormatter.string(from: date)
         case .d_EE:
-            dateFormatter.locale = Locale(identifier: "ru_Ru")
             dateFormatter.setLocalizedDateFormatFromTemplate("d")
             let dayNumber = dateFormatter.string(from: date)
             dateFormatter.setLocalizedDateFormatFromTemplate("EE")
             let dayWeek = dateFormatter.string(from: date)
             dataFormatted = "\(dayNumber)\n\(dayWeek)"
         case .EE:
-            dateFormatter.setLocalizedDateFormatFromTemplate("EE")
+            dateFormatter.locale = Locale(identifier: "en")
+            dateFormatter.setLocalizedDateFormatFromTemplate("EEEE")
             dataFormatted = dateFormatter.string(from: date)
         }
         return dataFormatted

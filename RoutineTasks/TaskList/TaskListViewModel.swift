@@ -17,7 +17,6 @@ protocol TaskListViewModelProtocol {
     func getTaskCellViewModel(at indexPath: IndexPath) -> TaskCellViewModelProtocol
     
     func getCalendar(days: Int) -> [String]
-    
 }
 
 class TaskListViewModel: TaskListViewModelProtocol {
@@ -25,7 +24,6 @@ class TaskListViewModel: TaskListViewModelProtocol {
     private let observersViewModel = ObserversViewModel.shared
     private let storageManager = StorageManager.shared
     private let date = DateManager()
-    
     private var tasks: [Task] = [] {
         didSet {
             DispatchQueue.main.async {
@@ -33,8 +31,6 @@ class TaskListViewModel: TaskListViewModelProtocol {
             }
         }
     }
-    
-    
     weak var delegate: ViewModelDelegate?
     
     init(observersViewModel: ObserversViewModel) {
