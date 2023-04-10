@@ -19,6 +19,8 @@
 		4233054C29E25286009F49A5 /* Task+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4233054829E25286009F49A5 /* Task+CoreDataProperties.swift */; };
 		4233054D29E25286009F49A5 /* Schedule+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4233054929E25286009F49A5 /* Schedule+CoreDataClass.swift */; };
 		4233054E29E25286009F49A5 /* Schedule+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4233054A29E25286009F49A5 /* Schedule+CoreDataProperties.swift */; };
+		4233055129E381DA009F49A5 /* CompletionDay+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4233054F29E381DA009F49A5 /* CompletionDay+CoreDataClass.swift */; };
+		4233055229E381DA009F49A5 /* CompletionDay+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4233055029E381DA009F49A5 /* CompletionDay+CoreDataProperties.swift */; };
 		423BA0AF287AE4B000D00A71 /* NewTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423BA0AE287AE4B000D00A71 /* NewTaskViewController.swift */; };
 		426D579A288D5260003DC0BF /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426D5799288D5260003DC0BF /* TaskCell.swift */; };
 		42ADF8EA29D9F06100F5D711 /* TaskListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42ADF8E929D9F06100F5D711 /* TaskListViewModel.swift */; };
@@ -46,6 +48,8 @@
 		4233054829E25286009F49A5 /* Task+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4233054929E25286009F49A5 /* Schedule+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Schedule+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4233054A29E25286009F49A5 /* Schedule+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Schedule+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		4233054F29E381DA009F49A5 /* CompletionDay+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompletionDay+CoreDataClass.swift"; sourceTree = "<group>"; };
+		4233055029E381DA009F49A5 /* CompletionDay+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompletionDay+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		423BA0AE287AE4B000D00A71 /* NewTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskViewController.swift; sourceTree = "<group>"; };
 		426D5799288D5260003DC0BF /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
 		42ADF8E929D9F06100F5D711 /* TaskListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListViewModel.swift; sourceTree = "<group>"; };
@@ -72,6 +76,8 @@
 		4231D6A82869A33D000419BA = {
 			isa = PBXGroup;
 			children = (
+				4233054F29E381DA009F49A5 /* CompletionDay+CoreDataClass.swift */,
+				4233055029E381DA009F49A5 /* CompletionDay+CoreDataProperties.swift */,
 				4233054729E25286009F49A5 /* Task+CoreDataClass.swift */,
 				4233054829E25286009F49A5 /* Task+CoreDataProperties.swift */,
 				4233054929E25286009F49A5 /* Schedule+CoreDataClass.swift */,
@@ -251,9 +257,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4233055129E381DA009F49A5 /* CompletionDay+CoreDataClass.swift in Sources */,
 				4231D6B92869A33D000419BA /* TaskListViewController.swift in Sources */,
 				4233054B29E25286009F49A5 /* Task+CoreDataClass.swift in Sources */,
 				4231D6B52869A33D000419BA /* AppDelegate.swift in Sources */,
+				4233055229E381DA009F49A5 /* CompletionDay+CoreDataProperties.swift in Sources */,
 				4233054D29E25286009F49A5 /* Schedule+CoreDataClass.swift in Sources */,
 				42FE9E4E28E5F95C00A6F9D7 /* StorageManager.swift in Sources */,
 				42ADF8EF29D9F1AB00F5D711 /* NewTaskViewModel.swift in Sources */,
