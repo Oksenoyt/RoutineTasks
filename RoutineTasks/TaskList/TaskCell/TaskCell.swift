@@ -15,7 +15,7 @@ class TaskCell: UITableViewCell {
         didSet {
             nameTaskLabel.text = viewModel.taskName
             setActiveDay()
-//            checkDayStatus()
+            checkDayStatus()
         }
     }
     
@@ -24,18 +24,19 @@ class TaskCell: UITableViewCell {
     }
     
     @IBAction func setDoneTask(_ sender: UIButton) {
-        viewModel.setDayStatus(dayBefore: getDayCount(sender.tag))
+        viewModel.setDayStatus(dayBefore: getNumberOfDays(sender.tag))
         setColor(sender.tag)
     }
     
     private func setColor(_ sender: Int) {
-        let dayDone = viewModel.checkDayIsDone(dayBefore: getDayCount(sender))
+        let dayDone = viewModel.checkDayIsDone(dayBefore: getNumberOfDays(sender))
+        let button = stackDaysButton[sender]
         if dayDone {
-            stackDaysButton[sender].backgroundColor = UIColor.init(named: viewModel.getColor())
+            button.backgroundColor = UIColor.init(named: viewModel.getColor())
         } else {
-            stackDaysButton[sender].backgroundColor = .clear
+            button.backgroundColor = .clear
         }
-        stackDaysButton[sender].layer.cornerRadius = 16
+        button.layer.cornerRadius = 16
     }
     
     private func setActiveDay() {
@@ -46,16 +47,22 @@ class TaskCell: UITableViewCell {
         }
     }
     
-    private func getDayCount(_ sender: Int) -> Int {
-        let dayCount: Int
+    private func checkDayStatus() {
+        for dayButton in stackDaysButton.prefix(3) {
+            setColor(dayButton.tag)
+        }
+    }
+    
+    private func getNumberOfDays(_ sender: Int) -> Int {
+        let numberOfDays: Int
         switch sender {
         case 0:
-            dayCount = 2
+            numberOfDays = 2
         case 1:
-            dayCount = 1
+            numberOfDays = 1
         default:
-            dayCount = 0
+            numberOfDays = 0
         }
-        return dayCount
+        return numberOfDays
     }
 }
