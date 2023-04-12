@@ -24,27 +24,12 @@ class TaskCell: UITableViewCell {
     }
     
     @IBAction func setDoneTask(_ sender: UIButton) {
-        switch sender.tag {
-        case 0:
-            viewModel.setDayStatus(dayBefore: 2)
-        case 1:
-            viewModel.setDayStatus(dayBefore: 1)
-        default:
-            viewModel.setDayStatus(dayBefore: 0)
-        }
+        viewModel.setDayStatus(dayBefore: getDayCount(sender.tag))
         setColor(sender.tag)
     }
     
     private func setColor(_ sender: Int) {
-        var dayDone = false
-        switch sender {
-        case 0:
-            dayDone = viewModel.checkDayIsDone(dayBefore: 2)
-        case 1:
-            dayDone = viewModel.checkDayIsDone(dayBefore: 1)
-        default:
-            dayDone = viewModel.checkDayIsDone(dayBefore: 0)
-        }
+        let dayDone = viewModel.checkDayIsDone(dayBefore: getDayCount(sender))
         if dayDone {
             stackDaysButton[sender].backgroundColor = UIColor.init(named: viewModel.getColor())
         } else {
@@ -59,5 +44,18 @@ class TaskCell: UITableViewCell {
             dayButton.isEnabled = viewModel.getActiveDay(dayBefore: day)
             day -= 1
         }
+    }
+    
+    private func getDayCount(_ sender: Int) -> Int {
+        let dayCount: Int
+        switch sender {
+        case 0:
+            dayCount = 2
+        case 1:
+            dayCount = 1
+        default:
+            dayCount = 0
+        }
+        return dayCount
     }
 }
