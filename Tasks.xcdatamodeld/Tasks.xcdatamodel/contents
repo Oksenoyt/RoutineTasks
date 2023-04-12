@@ -11,7 +11,7 @@
     <entity name="Task" representedClassName="Task" syncable="YES">
         <attribute name="color" attributeType="String"/>
         <attribute name="title" attributeType="String"/>
-        <relationship name="completionDay" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CompletionDay" inverseName="task" inverseEntity="CompletionDay"/>
+        <relationship name="completionDay" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CompletionDay" inverseName="task" inverseEntity="CompletionDay"/>
         <relationship name="schedule" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Schedule" inverseName="task" inverseEntity="Schedule"/>
     </entity>
 </model>

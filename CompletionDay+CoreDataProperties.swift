@@ -2,7 +2,7 @@
 //  CompletionDay+CoreDataProperties.swift
 //  RoutineTasks
 //
-//  Created by Elenka on 09.04.2023.
+//  Created by Elenka on 12.04.2023.
 //
 //
 

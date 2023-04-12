@@ -8,7 +8,7 @@
 import Foundation
 
 protocol TaskListViewModelProtocol {
-    var delegate: ViewModelDelegate? { get set }
+    var delegate: TaskListViewModelDelegate? { get set }
     
     func fetchTasks(completion: @escaping() -> Void)
     func deleteTask(at indexPath: IndexPath)
@@ -20,7 +20,7 @@ protocol TaskListViewModelProtocol {
 }
 
 class TaskListViewModel: TaskListViewModelProtocol {
-    
+    weak var delegate: TaskListViewModelDelegate?
     private let observersViewModel = ObserversViewModel.shared
     private let storageManager = StorageManager.shared
     private let date = DateManager()
@@ -31,7 +31,6 @@ class TaskListViewModel: TaskListViewModelProtocol {
             }
         }
     }
-    weak var delegate: ViewModelDelegate?
     
     init(observersViewModel: ObserversViewModel) {
         observersViewModel.addObserver(observer: self)

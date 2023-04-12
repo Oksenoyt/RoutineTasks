@@ -18,14 +18,14 @@ protocol TaskCellViewModelProtocol {
 }
 
 class TaskCellViewModel: TaskCellViewModelProtocol {
-    private let task: Task
-    private let date = DateManager()
-    private var completionDay: [String] = []
-    
     var taskName: String {
         //убрать опционал
         task.title ?? "nan"
     }
+    private let observersViewModel = ObserversViewModel.shared
+    private let task: Task
+    private let date = DateManager()
+    private var completionDay: [String] = []
     
     required init(task: Task) {
         self.task = task
@@ -47,15 +47,9 @@ class TaskCellViewModel: TaskCellViewModelProtocol {
         let day = date.getDateString(dayBefore: dayBefore, format: .yyyyMMdd)
         completionDay = getCompletionDay()
         if completionDay.contains(day) {
-            StorageManager.shared.deleteCompletionDay(task, completionDay: day) { result in
-                print(result)
-//                ljsakfjskldfjlkj
-            }
+            StorageManager.shared.deleteCompletionDay(task, completionDay: day)
         } else {
-            StorageManager.shared.createCompletionDay(task, date: day) { result in
-                print(result)
-//                ljltkfnm
-            }
+            StorageManager.shared.createCompletionDay(task, date: day)
         }
     }
     

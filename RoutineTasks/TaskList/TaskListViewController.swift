@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol ViewModelDelegate: AnyObject {
+protocol TaskListViewModelDelegate: AnyObject {
     func dataDidChange()
 }
 
@@ -105,7 +105,7 @@ extension TaskListViewController: UITableViewDelegate {
     }
 }
 
-extension TaskListViewController: ViewModelDelegate {
+extension TaskListViewController: TaskListViewModelDelegate {
     func dataDidChange() {
         DispatchQueue.main.async {
             self.taskListTableView.reloadData()

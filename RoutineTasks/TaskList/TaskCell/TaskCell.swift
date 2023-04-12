@@ -15,9 +15,9 @@ class TaskCell: UITableViewCell {
         didSet {
             nameTaskLabel.text = viewModel.taskName
             setActiveDay()
+//            checkDayStatus()
         }
     }
-    
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated) //??
@@ -32,15 +32,12 @@ class TaskCell: UITableViewCell {
         default:
             viewModel.setDayStatus(dayBefore: 0)
         }
-        
-        
-        setColor(sender)
-        
+        setColor(sender.tag)
     }
     
-    private func setColor(_ sender: UIButton) {
+    private func setColor(_ sender: Int) {
         var dayDone = false
-        switch sender.tag {
+        switch sender {
         case 0:
             dayDone = viewModel.checkDayIsDone(dayBefore: 2)
         case 1:
@@ -49,11 +46,11 @@ class TaskCell: UITableViewCell {
             dayDone = viewModel.checkDayIsDone(dayBefore: 0)
         }
         if dayDone {
-            stackDaysButton[sender.tag].backgroundColor = UIColor.init(named: viewModel.getColor())
+            stackDaysButton[sender].backgroundColor = UIColor.init(named: viewModel.getColor())
         } else {
-            stackDaysButton[sender.tag].backgroundColor = .clear
+            stackDaysButton[sender].backgroundColor = .clear
         }
-        stackDaysButton[sender.tag].layer.cornerRadius = 16
+        stackDaysButton[sender].layer.cornerRadius = 16
     }
     
     private func setActiveDay() {

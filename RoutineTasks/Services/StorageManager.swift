@@ -76,18 +76,21 @@ class StorageManager {
     
     
     // MARK: - CRUD CompletionDay
-    func createCompletionDay(_ task: Task, date: String, completion: (Task) -> Void) {
+    func createCompletionDay(_ task: Task, date: String) {
         let completionDay = CompletionDay(context: viewContext)
         completionDay.task = task
         completionDay.date = date
         
-        completion(task)
         saveContext()
     }
     
-    func deleteCompletionDay(_ task: Task, completionDay: String, completion: (Task) -> Void) {
+    func deleteCompletionDay(_ task: Task, completionDay: String) {
         let fetchRequest = CompletionDay.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "(date = %@)", completionDay)
+        let datePredicate = NSPredicate(format: "(date = %@)", completionDay)
+        let taskPredicate = NSPredicate(format: "(task = %@)", task)
+        fetchRequest.predicate = NSCompoundPredicate(
+            andPredicateWithSubpredicates: [datePredicate, taskPredicate]
+        )
         do {
             let completionDay = try viewContext.fetch(fetchRequest)
             if let date = completionDay.first {
@@ -96,7 +99,6 @@ class StorageManager {
         } catch let error {
             print(error)
         }
-        completion(task)
         saveContext()
     }
     

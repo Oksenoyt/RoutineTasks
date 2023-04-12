@@ -2,7 +2,7 @@
 //  Task+CoreDataProperties.swift
 //  RoutineTasks
 //
-//  Created by Elenka on 09.04.2023.
+//  Created by Elenka on 12.04.2023.
 //
 //
 
@@ -18,25 +18,8 @@ extension Task {
 
     @NSManaged public var color: String?
     @NSManaged public var title: String?
-    @NSManaged public var schedule: NSSet?
     @NSManaged public var completionDay: NSSet?
-
-}
-
-// MARK: Generated accessors for schedule
-extension Task {
-
-    @objc(addScheduleObject:)
-    @NSManaged public func addToSchedule(_ value: Schedule)
-
-    @objc(removeScheduleObject:)
-    @NSManaged public func removeFromSchedule(_ value: Schedule)
-
-    @objc(addSchedule:)
-    @NSManaged public func addToSchedule(_ values: NSSet)
-
-    @objc(removeSchedule:)
-    @NSManaged public func removeFromSchedule(_ values: NSSet)
+    @NSManaged public var schedule: NSSet?
 
 }
 
@@ -54,6 +37,23 @@ extension Task {
 
     @objc(removeCompletionDay:)
     @NSManaged public func removeFromCompletionDay(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for schedule
+extension Task {
+
+    @objc(addScheduleObject:)
+    @NSManaged public func addToSchedule(_ value: Schedule)
+
+    @objc(removeScheduleObject:)
+    @NSManaged public func removeFromSchedule(_ value: Schedule)
+
+    @objc(addSchedule:)
+    @NSManaged public func addToSchedule(_ values: NSSet)
+
+    @objc(removeSchedule:)
+    @NSManaged public func removeFromSchedule(_ values: NSSet)
 
 }
 

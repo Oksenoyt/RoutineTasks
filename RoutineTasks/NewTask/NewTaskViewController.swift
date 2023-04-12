@@ -8,10 +8,8 @@
 import UIKit
 
 class NewTaskViewController: UIViewController {
-    
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet var itemColorStackButton: [UIButton]!
-    
     @IBOutlet weak var notificationTextField: UITextField!
     @IBOutlet var scheduleStackButton: [UIButton]!
     @IBOutlet weak var createButton: UIButton!
@@ -23,6 +21,7 @@ class NewTaskViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         viewModel = NewTaskViewModel()
         
         view.layer.cornerRadius = 30
@@ -31,22 +30,12 @@ class NewTaskViewController: UIViewController {
         for itemColorButton in itemColorStackButton {
             itemColorButton.layer.cornerRadius = 15
         }
+        setSettingsNameTF()
     }
     
     @IBAction func getColor(_ sender: UIButton) {
-//        setBorderColorButton(tagButton: sender.tag)
-//        switch sender.tag {
-//        case 0:
-//            color = "#c49dcc"
-//        case 1:
-//            color = "#bfd4d5"
-//        case 2:
-//            color = "#b096e4"
-//        case 3:
-//            color = "#a8eabc"
-//        default:
-//            color = "#edc6e0"
-//        }
+        setBorderColorButton(tagButton: sender.tag)
+        color = viewModel.getColor(sender.tag)
     }
     
     @IBAction func scheduleButton(_ sender: UIButton) {
@@ -64,13 +53,32 @@ class NewTaskViewController: UIViewController {
                     showAlert(with: "Заполните название задачи")
                     return
                 }
-        viewModel.addTask(name: name, color: color)
-        
-        dismiss(animated: true)
+        if viewModel.checkUniqueName(nameNewTask: name) {
+            viewModel.addTask(name: name, color: color)
+            dismiss(animated: true)
+        } else {
+            showAlert(with: "Введите уникальное название задачи")
+        }
     }
     
+    private func setSettingsNameTF() {
+        nameTextField.layer.masksToBounds = true
+        nameTextField.layer.cornerRadius = 30
+        nameTextField.clearButtonMode = .whileEditing
+        nameTextField.becomeFirstResponder()
+//        nameTextField.returnKeyType = UIReturnKeyType.done ///????
+    }
+    
+    
+    private func setBorderColorButton(tagButton: Int) {
+        for itemColorView in itemColorStackButton {
+            itemColorView.layer.borderWidth = 0
+        }
+        itemColorStackButton[tagButton].layer.borderWidth = 3.0
+    }
+    
+    
 }
-
 
 //что запихивать в екстеншин?
 extension NewTaskViewController {

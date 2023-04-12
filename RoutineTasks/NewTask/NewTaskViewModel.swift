@@ -18,28 +18,61 @@ enum DayWeek: String {
 }
 
 protocol NewTaskViewModelProtocol {
+    func checkUniqueName(nameNewTask: String) -> Bool
     func addTask(name: String, color: String)
     func selectedDaysDidChange(day: Int) -> Bool
+    func getColor(_ sender: Int) -> String
 }
 
 class NewTaskViewModel: NewTaskViewModelProtocol {
     private let observersViewModel = ObserversViewModel.shared
+    private let storageManager = StorageManager.shared
     private var selectedDays = [true, true, true, true, true, true, true]
     private var activeDays: [String] = []
     
     func addTask(name: String, color: String) {
         setActiveDay()
-        print(activeDays)
-        StorageManager.shared.createTask(name: name, color: color, activeDays: activeDays) { task in
-            StorageManager.shared.createSchedule(task, selectedDays: activeDays) { task in
+        storageManager.createTask(name: name, color: color, activeDays: activeDays) { task in
+            storageManager.createSchedule(task, selectedDays: activeDays) { task in
                 observersViewModel.addData(data: task)
             }
         }
     }
-
+    
     func selectedDaysDidChange(day: Int) -> Bool {
         selectedDays[day].toggle()
         return selectedDays[day]
+    }
+    
+    func getColor(_ sender: Int) -> String {
+        var color = "#c49dcc"
+        switch sender {
+        case 0:
+            color = "#c49dcc"
+        case 1:
+            color = "#bbece6"
+        case 2:
+            color = "#b096e4"
+        case 3:
+            color = "#a8eabc"
+        default:
+            color = "#edc6e0"
+        }
+        return color
+    }
+    
+    func checkUniqueName(nameNewTask: String) -> Bool {
+        var tasks: [Task] = []
+
+        print(tasks.count)
+        for task in tasks {
+            if task.title == nameNewTask {
+                print("name doeasn't unique")
+                return false
+            }
+        }
+        print("unique")
+        return true
     }
     
     private func setActiveDay() {
@@ -59,5 +92,4 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
             dayNumber += 1
         }
     }
-    
 }
