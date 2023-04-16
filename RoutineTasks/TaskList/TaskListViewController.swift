@@ -76,8 +76,9 @@ extension TaskListViewController: UITableViewDataSource {
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         
-        let editAction = UIContextualAction(style: .normal, title: "Edit") { _, _, _ in
-            print("sdfsdfsdf")
+        let editAction = UIContextualAction(style: .normal, title: "Edit") { _, _, completion in
+            self.performSegue(withIdentifier: "NewItemSegue", sender: self)
+            completion(true)
         }
         deleteAction.backgroundColor = #colorLiteral(red: 0.7979423404, green: 0.6081361771, blue: 0.8128324151, alpha: 1)
         editAction.backgroundColor = #colorLiteral(red: 0.7490196078, green: 0.831372549, blue: 0.8352941176, alpha: 1)
