@@ -76,14 +76,21 @@ extension TaskListViewController: UITableViewDataSource {
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         
-        let editAction = UIContextualAction(style: .normal, title: "Edit") { _, _, completion in
-            self.performSegue(withIdentifier: "NewItemSegue", sender: self)
-            completion(true)
+        let editAction = UIContextualAction(style: .normal, title: "Edit") { [unowned self] _, _, completion in
+            self.performSegue(withIdentifier: "NewItemSegue", sender: indexPath)
+            completion(true) // что делает
         }
         deleteAction.backgroundColor = #colorLiteral(red: 0.7979423404, green: 0.6081361771, blue: 0.8128324151, alpha: 1)
         editAction.backgroundColor = #colorLiteral(red: 0.7490196078, green: 0.831372549, blue: 0.8352941176, alpha: 1)
         
         return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "NewItemSegue", let indexPath = sender as? IndexPath {
+            guard let destinationVC = segue.destination as? NewTaskViewController else { return }
+            destinationVC.viewModel = viewModel.getTaskNewTaskViewModel(at: indexPath)
+        }
     }
 }
 

@@ -22,13 +22,24 @@ protocol NewTaskViewModelProtocol {
     func addTask(name: String, color: String)
     func selectedDaysDidChange(day: Int) -> Bool
     func getColor(_ sender: Int) -> String
+    
+    init(data: Task)
+    init()
 }
 
 class NewTaskViewModel: NewTaskViewModelProtocol {
+    required init() {}
+    
+    required init(data: Task) {
+        task = data
+        print(task)
+    }
+    
     private let observersViewModel = ObserversViewModel.shared
     private let storageManager = StorageManager.shared
     private var selectedDays = [true, true, true, true, true, true, true]
     private var activeDays: [String] = []
+    private var task: Task?
     
     func addTask(name: String, color: String) {
         setActiveDay()

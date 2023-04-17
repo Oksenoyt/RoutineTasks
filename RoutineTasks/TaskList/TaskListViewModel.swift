@@ -9,12 +9,12 @@ import Foundation
 
 protocol TaskListViewModelProtocol {
     var delegate: TaskListViewModelDelegate? { get set }
-    
     func fetchTasks(completion: @escaping() -> Void)
     func deleteTask(at indexPath: IndexPath)
     
     func numberOfRows() -> Int
     func getTaskCellViewModel(at indexPath: IndexPath) -> TaskCellViewModelProtocol
+    func getTaskNewTaskViewModel(at indexPath: IndexPath) -> NewTaskViewModelProtocol
     
     func getCalendar(days: Int) -> [String]
 }
@@ -58,12 +58,12 @@ class TaskListViewModel: TaskListViewModelProtocol {
         tasks.count
     }
     
+    // переделать на <T>
     func getTaskCellViewModel(at indexPath: IndexPath) -> TaskCellViewModelProtocol {
         TaskCellViewModel(task: tasks[indexPath.row])
     }
-    
-    func getTask(at indexPath: IndexPath) -> Task {
-        tasks[indexPath.row]
+    func getTaskNewTaskViewModel(at indexPath: IndexPath) -> NewTaskViewModelProtocol {
+        NewTaskViewModel(data: tasks[indexPath.row])
     }
     
     //проверить - - в передаче

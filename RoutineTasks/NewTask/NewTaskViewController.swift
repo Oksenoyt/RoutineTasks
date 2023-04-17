@@ -23,7 +23,7 @@ class NewTaskViewController: UIViewController {
         super.viewDidLoad()
         
         viewModel = NewTaskViewModel()
-        
+    
         view.layer.cornerRadius = 30
         createButton.layer.cornerRadius = 15
         
@@ -76,7 +76,6 @@ class NewTaskViewController: UIViewController {
         }
         itemColorStackButton[tagButton].layer.borderWidth = 3.0
     }
-    
     
 }
 
