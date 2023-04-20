@@ -15,6 +15,7 @@ protocol TaskListViewModelProtocol {
     func numberOfRows() -> Int
     func getTaskCellViewModel(at indexPath: IndexPath) -> TaskCellViewModelProtocol
     func getTaskNewTaskViewModel(at indexPath: IndexPath) -> NewTaskViewModelProtocol
+    func getTasks() -> NewTaskViewModelProtocol
     
     func getCalendar(days: Int) -> [String]
 }
@@ -26,6 +27,7 @@ class TaskListViewModel: TaskListViewModelProtocol {
     private let date = DateManager()
     private var tasks: [Task] = [] {
         didSet {
+            print("tasks did change")
             DispatchQueue.main.async {
                 self.delegate?.dataDidChange()
             }
@@ -66,6 +68,10 @@ class TaskListViewModel: TaskListViewModelProtocol {
         NewTaskViewModel(data: tasks[indexPath.row])
     }
     
+    func getTasks() -> NewTaskViewModelProtocol {
+        NewTaskViewModel(data: tasks)
+    }
+    
     //проверить - - в передаче
     func getCalendar(days: Int) -> [String] {
         var dayLabels: [String] = []
@@ -85,6 +91,12 @@ extension TaskListViewModel: DataObserver {
     func didDeleteData(task: Task) {
         if let index = tasks.firstIndex(of: task) {
             tasks.remove(at: index)
+        }
+    }
+    
+    func didChangeData(task: Task) {
+        DispatchQueue.main.async {
+            self.delegate?.dataDidChange()
         }
     }
 }

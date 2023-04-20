@@ -90,6 +90,9 @@ extension TaskListViewController: UITableViewDataSource {
         if segue.identifier == "NewItemSegue", let indexPath = sender as? IndexPath {
             guard let destinationVC = segue.destination as? NewTaskViewController else { return }
             destinationVC.viewModel = viewModel.getTaskNewTaskViewModel(at: indexPath)
+        } else {
+            guard let destinationVC = segue.destination as? NewTaskViewController else { return }
+            destinationVC.viewModel = viewModel.getTasks()
         }
     }
 }

@@ -10,6 +10,7 @@ import Foundation
 protocol DataObserver: AnyObject {
     func didAddData(task: Task)
     func didDeleteData(task: Task)
+    func didChangeData(task: Task)
 }
 
 class ObserversViewModel {
@@ -29,6 +30,12 @@ class ObserversViewModel {
     func addData(data: Task) {
         for observer in observers {
             observer.didAddData(task: data)
+        }
+    }
+    
+    func changeData(data: Task) {
+        for observer in observers {
+            observer.didChangeData(task: data)
         }
     }
     

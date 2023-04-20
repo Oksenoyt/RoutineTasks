@@ -19,8 +19,7 @@ protocol TaskCellViewModelProtocol {
 
 class TaskCellViewModel: TaskCellViewModelProtocol {
     var taskName: String {
-        //убрать опционал
-        task.title ?? "nan"
+        task.title
     }
     private let observersViewModel = ObserversViewModel.shared
     private let task: Task
@@ -63,8 +62,7 @@ class TaskCellViewModel: TaskCellViewModelProtocol {
     }
     
     func getColor() -> String {
-        guard let color = task.color else { return "#c49dcc" }
-        return color
+        task.color
     }
     
     private func getCompletionDay() -> [String] {

@@ -30,7 +30,7 @@ class StorageManager {
     }
     
     // MARK: - CRUD TASK
-    func createTask(name: String, color: String, activeDays: [String], completion: (Task) -> Void) {
+    func createTask(name: String, color: String, completion: (Task) -> Void) {
         let task = Task(context: viewContext)
         task.title = name
         task.color = color
@@ -56,6 +56,26 @@ class StorageManager {
     //        completion(taskList)
     //        saveContext()
     //    }
+    
+    func updateTask(_ task: Task, newTitle: String, color: String, completion: (Result<Task, Error>) -> Void) {
+        let fetchRequest = Task.fetchRequest()
+        
+        do {
+            fetchRequest.predicate = NSPredicate(
+                format: "title == %@", task.title
+            )
+            let objects = try viewContext.fetch(fetchRequest)
+            guard let task = objects.first else {
+            //написать ошибку
+            return }
+            task.title = newTitle
+            task.color = color
+            saveContext()
+            completion(.success(task))
+        } catch let error {
+            completion(.failure(error))
+        }
+    }
     
     func deleteTask(_ task: Task) {
         viewContext.delete(task)
@@ -105,16 +125,16 @@ class StorageManager {
     
     
     
-//    func fetchSchedule(task: Task, completion: (Result<[Schedule], Error>) -> Void) {
-//        let fetchRequest = Schedule.fetchRequest()
-//        fetchRequest.predicate = NSPredicate(format: "(task = %@)", task)
-//        do {
-//            let schedule = try viewContext.fetch(fetchRequest)
-//            completion(.success(schedule))
-//        } catch let error {
-//            completion(.failure(error))
-//        }
-//    }
+    //    func fetchSchedule(task: Task, completion: (Result<[Schedule], Error>) -> Void) {
+    //        let fetchRequest = Schedule.fetchRequest()
+    //        fetchRequest.predicate = NSPredicate(format: "(task = %@)", task)
+    //        do {
+    //            let schedule = try viewContext.fetch(fetchRequest)
+    //            completion(.success(schedule))
+    //        } catch let error {
+    //            completion(.failure(error))
+    //        }
+    //    }
     
     
     // MARK: - Core Data Saving support

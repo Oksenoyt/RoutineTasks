@@ -18,21 +18,31 @@ enum DayWeek: String {
 }
 
 protocol NewTaskViewModelProtocol {
+    var taskName: String { get }
+    func checkNameTFFilled(title: String?, placeholder: String? ) -> String?
     func checkUniqueName(nameNewTask: String) -> Bool
     func addTask(name: String, color: String)
     func selectedDaysDidChange(day: Int) -> Bool
-    func getColor(_ sender: Int) -> String
+    func chooseColor(_ sender: Int) -> String
+    func getColorButton() -> Int 
     
+    //gthtltkfnm
     init(data: Task)
-    init()
+    init(data: [Task])
 }
 
 class NewTaskViewModel: NewTaskViewModelProtocol {
-    required init() {}
+    
+    required init(data: [Task]) {
+        tasks = data
+    }
     
     required init(data: Task) {
         task = data
-        print(task)
+    }
+    
+    var taskName: String {
+        return task?.title ?? ""
     }
     
     private let observersViewModel = ObserversViewModel.shared
@@ -40,14 +50,43 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
     private var selectedDays = [true, true, true, true, true, true, true]
     private var activeDays: [String] = []
     private var task: Task?
+    private var tasks: [Task] = []
+    
     
     func addTask(name: String, color: String) {
         setActiveDay()
-        storageManager.createTask(name: name, color: color, activeDays: activeDays) { task in
-            storageManager.createSchedule(task, selectedDays: activeDays) { task in
-                observersViewModel.addData(data: task)
+        guard let currentTask = task else {
+            storageManager.createTask(name: name, color: color) { task in
+                storageManager.createSchedule(task, selectedDays: activeDays) { task in
+                    observersViewModel.addData(data: task)
+                }
+            }
+            return
+        }
+        storageManager.updateTask(currentTask, newTitle: name, color: color) { result in
+            switch result {
+            case .success(let newTask):
+                
+                storageManager.createSchedule(newTask, selectedDays: activeDays) { task in
+                    observersViewModel.changeData(data: task)
+                }
+            case .failure(let error):
+                print(error)
             }
         }
+    }
+    
+    func checkNameTFFilled(title: String?, placeholder: String? ) -> String? {
+        var name: String? = nil
+        guard let taskName = title, !taskName.isEmpty else {
+            guard let taskName = placeholder, !taskName.isEmpty else {
+                return name
+            }
+            name = taskName
+            return name
+        }
+        name = taskName
+        return name
     }
     
     func selectedDaysDidChange(day: Int) -> Bool {
@@ -55,7 +94,7 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
         return selectedDays[day]
     }
     
-    func getColor(_ sender: Int) -> String {
+    func chooseColor(_ sender: Int) -> String {
         var color = "#c49dcc"
         switch sender {
         case 0:
@@ -72,17 +111,29 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
         return color
     }
     
+    func getColorButton() -> Int {
+        let sender: Int
+        switch task?.color {
+        case "#edc6e0":
+            sender = 4
+        case "#bbece6":
+            sender = 1
+        case "#b096e4":
+            sender = 2
+        case "#a8eabc":
+            sender = 3
+        default:
+            sender = 0
+        }
+        return sender
+    }
+    
     func checkUniqueName(nameNewTask: String) -> Bool {
-        var tasks: [Task] = []
-
-        print(tasks.count)
         for task in tasks {
             if task.title == nameNewTask {
-                print("name doeasn't unique")
                 return false
             }
         }
-        print("unique")
         return true
     }
     
