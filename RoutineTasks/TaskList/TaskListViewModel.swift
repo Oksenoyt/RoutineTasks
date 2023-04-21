@@ -27,7 +27,6 @@ class TaskListViewModel: TaskListViewModelProtocol {
     private let date = DateManager()
     private var tasks: [Task] = [] {
         didSet {
-            print("tasks did change")
             DispatchQueue.main.async {
                 self.delegate?.dataDidChange()
             }
@@ -65,7 +64,7 @@ class TaskListViewModel: TaskListViewModelProtocol {
         TaskCellViewModel(task: tasks[indexPath.row])
     }
     func getTaskNewTaskViewModel(at indexPath: IndexPath) -> NewTaskViewModelProtocol {
-        NewTaskViewModel(data: tasks[indexPath.row])
+        NewTaskViewModel(data: tasks[indexPath.row], dataList: tasks)
     }
     
     func getTasks() -> NewTaskViewModelProtocol {

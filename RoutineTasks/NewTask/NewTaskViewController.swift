@@ -21,9 +21,7 @@ class NewTaskViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.layer.cornerRadius = 30
-        
         setFormSettings()
     }
     

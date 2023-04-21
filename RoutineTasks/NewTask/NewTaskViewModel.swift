@@ -28,7 +28,7 @@ protocol NewTaskViewModelProtocol {
     func getColorButton() -> Int 
     
     //gthtltkfnm
-    init(data: Task)
+    init(data: Task, dataList: [Task])
     init(data: [Task])
 }
 
@@ -38,8 +38,9 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
         tasks = data
     }
     
-    required init(data: Task) {
+    required init(data: Task, dataList: [Task]) {
         task = data
+        tasks = dataList
     }
     
     var taskName: String {
