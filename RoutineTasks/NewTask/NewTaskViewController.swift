@@ -47,7 +47,7 @@ class NewTaskViewController: UIViewController {
             showAlert(with: "Введите название задачи")
             return
         }
-        if viewModel.checkUniqueName(nameNewTask: name) {
+        if viewModel.checkUniqueName(nameNewTask: name, isChange: nameTextField.text) {
             viewModel.addTask(name: name, color: color)
             dismiss(animated: true)
         } else {

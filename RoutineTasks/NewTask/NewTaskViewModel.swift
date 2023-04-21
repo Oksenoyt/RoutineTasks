@@ -21,11 +21,11 @@ protocol NewTaskViewModelProtocol {
     var taskName: String { get }
     var createButton: String { get }
     func checkNameTFFilled(title: String?, placeholder: String? ) -> String?
-    func checkUniqueName(nameNewTask: String) -> Bool
+    func checkUniqueName(nameNewTask: String, isChange: String?) -> Bool
     func addTask(name: String, color: String)
     func selectedDaysDidChange(day: Int) -> Bool
     func chooseColor(_ sender: Int) -> String
-    func getColorButton() -> Int 
+    func getColorButton() -> Int
     
     //gthtltkfnm
     init(data: Task, dataList: [Task])
@@ -135,11 +135,14 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
         return sender
     }
     
-    func checkUniqueName(nameNewTask: String) -> Bool {
-        for task in tasks {
-            if task.title == nameNewTask {
-                return false
+    func checkUniqueName(nameNewTask: String, isChange: String?) -> Bool {
+        if isChange != "" {
+            for task in tasks {
+                if task.title == nameNewTask {
+                    return false
+                }
             }
+            return true
         }
         return true
     }
