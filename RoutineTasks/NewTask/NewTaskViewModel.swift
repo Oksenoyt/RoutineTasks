@@ -19,6 +19,7 @@ enum DayWeek: String {
 
 protocol NewTaskViewModelProtocol {
     var taskName: String { get }
+    var createButton: String { get }
     func checkNameTFFilled(title: String?, placeholder: String? ) -> String?
     func checkUniqueName(nameNewTask: String) -> Bool
     func addTask(name: String, color: String)
@@ -43,6 +44,11 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
     
     var taskName: String {
         return task?.title ?? ""
+    }
+    
+    var createButton: String {
+        let text = task != nil ? "Update" : "Сreate"
+        return text
     }
     
     private let observersViewModel = ObserversViewModel.shared
@@ -154,4 +160,6 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
             dayNumber += 1
         }
     }
+    
+    
 }

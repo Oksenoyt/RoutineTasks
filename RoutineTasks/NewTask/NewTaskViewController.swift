@@ -90,6 +90,7 @@ class NewTaskViewController: UIViewController {
     
     private func setSettingsCreateButton() {
         createButton.layer.cornerRadius = 15
+        createButton.setTitle(viewModel.createButton, for: .normal)
     }
 }
 
