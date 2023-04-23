@@ -15,9 +15,7 @@ class NewTaskViewController: UIViewController {
     @IBOutlet weak var createButton: UIButton!
     
     var viewModel: NewTaskViewModelProtocol!
-    
     private var color = "#c49dcc"
-    private var selectedDays = [true, true, true, true, true, true, true]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,6 +58,7 @@ class NewTaskViewController: UIViewController {
         setSettingsNameTF()
         setSettingsColorButton(tagButton: viewModel.getColorButton())
         setSettingsCreateButton()
+        setSettingsScheduleButton()
     }
     
     private func setSettingsNameTF() {
@@ -89,6 +88,12 @@ class NewTaskViewController: UIViewController {
     private func setSettingsCreateButton() {
         createButton.layer.cornerRadius = 15
         createButton.setTitle(viewModel.createButton, for: .normal)
+    }
+    
+    private func setSettingsScheduleButton() {
+        for dayButton in scheduleStackButton {
+            dayButton.isEnabled = viewModel.getActiveDay(dayBefore: dayButton.tag)
+        }
     }
 }
 

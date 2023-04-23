@@ -20,6 +20,8 @@ enum DayWeek: String {
 protocol NewTaskViewModelProtocol {
     var taskName: String { get }
     var createButton: String { get }
+    
+    func getActiveDay(dayBefore: Int) -> Bool
     func checkNameTFFilled(title: String?, placeholder: String? ) -> String?
     func checkUniqueName(nameNewTask: String, isChange: String?) -> Bool
     func addTask(name: String, color: String)
@@ -54,6 +56,7 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
     
     private let observersViewModel = ObserversViewModel.shared
     private let storageManager = StorageManager.shared
+    private let date = DateManager()
     private var selectedDays = [true, true, true, true, true, true, true]
     private var activeDays: [String] = []
     private var task: Task?
@@ -61,7 +64,7 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
     
     
     func addTask(name: String, color: String) {
-        setActiveDay()
+        fillSelectedDays()
         guard let currentTask = task else {
             storageManager.createTask(name: name, color: color) { task in
                 storageManager.createSchedule(task, selectedDays: activeDays) { task in
@@ -147,7 +150,13 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
         return true
     }
     
-    private func setActiveDay() {
+    func getActiveDay(dayBefore: Int) -> Bool {
+        guard task != nil else { return true }
+        //need do
+        return false
+    }
+    
+    private func fillSelectedDays() {
         var dayNumber = 0
         for day in selectedDays {
             if day {
