@@ -92,7 +92,7 @@ class NewTaskViewController: UIViewController {
     
     private func setSettingsScheduleButton() {
         for dayButton in scheduleStackButton {
-            dayButton.isEnabled = viewModel.getActiveDay(dayBefore: dayButton.tag)
+            dayButton.isEnabled = true
         }
     }
 }

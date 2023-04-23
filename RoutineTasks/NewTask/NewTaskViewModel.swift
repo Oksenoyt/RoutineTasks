@@ -7,21 +7,11 @@
 
 import Foundation
 
-enum DayWeek: String {
-    case mo = "Monday"
-    case tu = "Tuesday"
-    case we = "Wednesday"
-    case th = "Thursday"
-    case fr = "Friday"
-    case sa = "Saturday"
-    case su = "Sunday"
-}
-
 protocol NewTaskViewModelProtocol {
     var taskName: String { get }
     var createButton: String { get }
     
-    func getActiveDay(dayBefore: Int) -> Bool
+    func getSchedule(dayWeek: Int) -> Bool 
     func checkNameTFFilled(title: String?, placeholder: String? ) -> String?
     func checkUniqueName(nameNewTask: String, isChange: String?) -> Bool
     func addTask(name: String, color: String)
@@ -57,17 +47,19 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
     private let observersViewModel = ObserversViewModel.shared
     private let storageManager = StorageManager.shared
     private let date = DateManager()
+    private let daysWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    
     private var selectedDays = [true, true, true, true, true, true, true]
-    private var activeDays: [String] = []
+    private var schedule: [String] = []
     private var task: Task?
     private var tasks: [Task] = []
     
     
     func addTask(name: String, color: String) {
-        fillSelectedDays()
+        filSchedule()
         guard let currentTask = task else {
             storageManager.createTask(name: name, color: color) { task in
-                storageManager.createSchedule(task, selectedDays: activeDays) { task in
+                storageManager.createSchedule(task, selectedDays: schedule) { task in
                     observersViewModel.addData(data: task)
                 }
             }
@@ -77,7 +69,7 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
             switch result {
             case .success(let newTask):
                 
-                storageManager.createSchedule(newTask, selectedDays: activeDays) { task in
+                storageManager.createSchedule(newTask, selectedDays: schedule) { task in
                     observersViewModel.changeData(data: task)
                 }
             case .failure(let error):
@@ -150,29 +142,43 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
         return true
     }
     
-    func getActiveDay(dayBefore: Int) -> Bool {
+    func getSchedule(dayWeek: Int) -> Bool {
         guard task != nil else { return true }
-        //need do
+        
+//        if let scheduleTemp = task?.schedule?.allObjects as? [Schedule] {
+//            schedule = scheduleTemp.map { ($0.day ?? "") }
+//        }
+//
+//        switch dayWeek {
+//        case 1:
+//            return "Monday"
+//        case 2:
+//            return "Tuesday"
+//        case 3:
+//            return "Wednesday"
+//        case 4:
+//            return "Thursday"
+//        case 5:
+//            return "Friday"
+//        case 6:
+//            "Saturday" // переделать на цифры
+//        default:
+            
+//        }
+//
+//        if scheduleWithNumberDays.contains(dayWeek) {
+//            return true
+//        }
+//        return false
+        
+        
+        
         return false
     }
     
-    private func fillSelectedDays() {
-        var dayNumber = 0
-        for day in selectedDays {
-            if day {
-                switch dayNumber {
-                case 0: activeDays.append(DayWeek.mo.rawValue)
-                case 1: activeDays.append(DayWeek.tu.rawValue)
-                case 2: activeDays.append(DayWeek.we.rawValue)
-                case 3: activeDays.append(DayWeek.th.rawValue)
-                case 4: activeDays.append(DayWeek.fr.rawValue)
-                case 5: activeDays.append(DayWeek.sa.rawValue)
-                default: activeDays.append(DayWeek.su.rawValue)
-                }
-            }
-            dayNumber += 1
-        }
+    private func filSchedule() {
+        let activeDaysWeek = Array(zip(selectedDays, daysWeek))
+        let activeDaysWeekFiltered = activeDaysWeek.filter { $0.0 == true }
+        schedule = activeDaysWeekFiltered.map { $0.1 }
     }
-    
-    
 }
