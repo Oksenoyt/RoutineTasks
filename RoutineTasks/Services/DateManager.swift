@@ -19,7 +19,6 @@ class DateManager {
     enum formatDate {
         case yyyyMMdd
         case d_EE
-        case EE
     }
     
     func getDateString(dayBefore: Int, format: formatDate ) -> String {
@@ -36,12 +35,14 @@ class DateManager {
             dateFormatter.setLocalizedDateFormatFromTemplate("EE")
             let dayWeek = dateFormatter.string(from: date)
             dataFormatted = "\(dayNumber)\n\(dayWeek)"
-        case .EE:
-            dateFormatter.locale = Locale(identifier: "en")
-            dateFormatter.setLocalizedDateFormatFromTemplate("EEEE")
-            dataFormatted = dateFormatter.string(from: date)
         }
         return dataFormatted
+    }
+    
+    func getDateInt(dayBefore: Int) -> Int {
+        let date = date.dayBefore(value: -dayBefore)
+        let weekday = calendar.component(.weekday, from: date)
+        return weekday - 1
     }
     
     func dayBefore(value: Int) -> Date {

@@ -31,10 +31,11 @@ class TaskCellViewModel: TaskCellViewModelProtocol {
     }
     
     func getActiveDay(dayBefore: Int) -> Bool {
-        let day = date.getDateString(dayBefore: dayBefore, format: .EE)
-        var schedule: [String] = []
+        let day = date.getDateInt(dayBefore: dayBefore)
+        var schedule: [Int] = []
         if let scheduleTemp = task.schedule?.allObjects as? [Schedule] {
-            schedule = scheduleTemp.map { ($0.day ?? "") }
+            let scheduleTemp = scheduleTemp.map { ($0.day ) }
+            schedule = scheduleTemp.map { Int($0) }
         }
         if schedule.contains(day) {
             return true

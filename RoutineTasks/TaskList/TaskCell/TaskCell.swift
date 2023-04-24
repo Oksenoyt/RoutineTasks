@@ -40,7 +40,7 @@ class TaskCell: UITableViewCell {
     }
     
     private func setActiveDay() {
-        var day = 2
+        var day = 3
         for dayButton in stackDaysButton {
             dayButton.isEnabled = viewModel.getActiveDay(dayBefore: day)
             day -= 1

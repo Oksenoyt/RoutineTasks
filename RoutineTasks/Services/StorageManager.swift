@@ -84,10 +84,10 @@ class StorageManager {
     
     
     // MARK: - CRUD SCHEDULE
-    func createSchedule(_ task: Task, selectedDays: [String], completion: (Task) -> Void) {
+    func createSchedule(_ task: Task, selectedDays: [Int], completion: (Task) -> Void) {
         for day in selectedDays {
             let schedule = Schedule(context: viewContext)
-            schedule.day = day
+            schedule.day = Int64(day)
             task.addToSchedule(schedule)
             saveContext()
         }

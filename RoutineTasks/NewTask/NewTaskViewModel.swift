@@ -11,7 +11,7 @@ protocol NewTaskViewModelProtocol {
     var taskName: String { get }
     var createButton: String { get }
     
-    func getSchedule(dayWeek: Int) -> Bool 
+    func getSchedule(dayWeek: Int) -> Bool
     func checkNameTFFilled(title: String?, placeholder: String? ) -> String?
     func checkUniqueName(nameNewTask: String, isChange: String?) -> Bool
     func addTask(name: String, color: String)
@@ -47,10 +47,10 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
     private let observersViewModel = ObserversViewModel.shared
     private let storageManager = StorageManager.shared
     private let date = DateManager()
-    private let daysWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    private let daysWeek = [0, 1, 2, 3, 4, 5, 6]
     
     private var selectedDays = [true, true, true, true, true, true, true]
-    private var schedule: [String] = []
+    private var schedule: [Int] = []
     private var task: Task?
     private var tasks: [Task] = []
     
@@ -145,34 +145,14 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
     func getSchedule(dayWeek: Int) -> Bool {
         guard task != nil else { return true }
         
-//        if let scheduleTemp = task?.schedule?.allObjects as? [Schedule] {
-//            schedule = scheduleTemp.map { ($0.day ?? "") }
-//        }
-//
-//        switch dayWeek {
-//        case 1:
-//            return "Monday"
-//        case 2:
-//            return "Tuesday"
-//        case 3:
-//            return "Wednesday"
-//        case 4:
-//            return "Thursday"
-//        case 5:
-//            return "Friday"
-//        case 6:
-//            "Saturday" // переделать на цифры
-//        default:
-            
-//        }
-//
-//        if scheduleWithNumberDays.contains(dayWeek) {
-//            return true
-//        }
-//        return false
-        
-        
-        
+        if let scheduleTemp = task?.schedule?.allObjects as? [Schedule] {
+            let scheduleTemp = scheduleTemp.map { ($0.day ) }
+            schedule = scheduleTemp.map { Int($0) }
+        }
+
+        if schedule.contains(dayWeek) {
+            return true
+        }
         return false
     }
     

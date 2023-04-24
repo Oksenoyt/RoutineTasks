@@ -92,7 +92,11 @@ class NewTaskViewController: UIViewController {
     
     private func setSettingsScheduleButton() {
         for dayButton in scheduleStackButton {
-            dayButton.isEnabled = true
+            if viewModel.getSchedule(dayWeek: dayButton.tag) {
+                dayButton.tintColor = .systemBlue
+            } else {
+                dayButton.tintColor = .gray
+            }
         }
     }
 }
