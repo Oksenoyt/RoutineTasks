@@ -29,6 +29,7 @@ class NewTaskViewController: UIViewController {
     
     @IBAction func scheduleButton(_ sender: UIButton) {
         let stateOfTheDay = viewModel.selectedDaysDidChange(day: sender.tag)
+        print(stateOfTheDay)
         if stateOfTheDay {
             scheduleStackButton[sender.tag].tintColor = .systemBlue
         } else {

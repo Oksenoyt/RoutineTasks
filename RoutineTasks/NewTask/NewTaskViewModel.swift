@@ -48,14 +48,12 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
     private let date = DateManager()
     private let daysWeek = [0, 1, 2, 3, 4, 5, 6]
     
-    private var selectedDays = [true, true, true, true, true, true, true]
-    private var schedule: [Int] = []
+    private var schedule: [Int] = [0, 1, 2, 3, 4, 5, 6]
     private var task: Task?
     private var tasks: [Task] = []
     
     
     func addTask(name: String, color: String) {
-        filSchedule()
         guard let currentTask = task else {
             storageManager.createTask(name: name, color: color) { task in
                 storageManager.createSchedule(task, selectedDays: schedule) { task in
@@ -97,8 +95,14 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
     }
     
     func selectedDaysDidChange(day: Int) -> Bool {
-        selectedDays[day].toggle()
-        return selectedDays[day]
+        if schedule.contains(day) {
+            guard let index = schedule.firstIndex(of: day) else { return false }
+            schedule.remove(at: index)
+            return false
+        } else {
+            schedule.append(day)
+            return true
+        }
     }
     
     func chooseColor(_ sender: Int) -> String {
@@ -155,16 +159,16 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
         return true
     }
     
-    private func filSchedule() {
-        let activeDaysWeek = Array(zip(selectedDays, daysWeek))
-        let activeDaysWeekFiltered = activeDaysWeek.filter { $0.0 == true }
-        schedule = activeDaysWeekFiltered.map { $0.1 }
-    }
+//    private func filSchedule() {
+//        let activeDaysWeek = Array(zip(selectedDays, daysWeek))
+//        let activeDaysWeekFiltered = activeDaysWeek.filter { $0.0 == true }
+//        schedule = activeDaysWeekFiltered.map { $0.1 }
+//    }
     
 //    private func filSelectedDays() {
 //        guard task != nil else { return }
 //        gu
 //        selectedDays =
-//        
+//
 //    }
 }
