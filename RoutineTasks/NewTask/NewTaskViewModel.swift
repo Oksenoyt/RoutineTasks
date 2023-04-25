@@ -11,6 +11,10 @@ protocol NewTaskViewModelProtocol {
     var taskName: String { get }
     var createButton: String { get }
     
+    //gthtltkfnm
+    init(data: Task, dataList: [Task])
+    init(data: [Task])
+
     func getSchedule(dayWeek: Int) -> Bool
     func checkNameTFFilled(title: String?, placeholder: String? ) -> String?
     func checkUniqueName(nameNewTask: String, isChange: String?) -> Bool
@@ -18,10 +22,6 @@ protocol NewTaskViewModelProtocol {
     func selectedDaysDidChange(day: Int) -> Bool
     func chooseColor(_ sender: Int) -> String
     func getColorButton() -> Int
-    
-    //gthtltkfnm
-    init(data: Task, dataList: [Task])
-    init(data: [Task])
 }
 
 class NewTaskViewModel: NewTaskViewModelProtocol {
@@ -46,12 +46,10 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
     private let observersViewModel = ObserversViewModel.shared
     private let storageManager = StorageManager.shared
     private let date = DateManager()
-    private let daysWeek = [0, 1, 2, 3, 4, 5, 6]
     
-    private var schedule: [Int] = [0, 1, 2, 3, 4, 5, 6]
+    private var schedule = [0, 1, 2, 3, 4, 5, 6]
     private var task: Task?
     private var tasks: [Task] = []
-    
     
     func addTask(name: String, color: String) {
         guard let currentTask = task else {
@@ -158,17 +156,4 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
         guard schedule.contains(dayWeek) else { return false }
         return true
     }
-    
-//    private func filSchedule() {
-//        let activeDaysWeek = Array(zip(selectedDays, daysWeek))
-//        let activeDaysWeekFiltered = activeDaysWeek.filter { $0.0 == true }
-//        schedule = activeDaysWeekFiltered.map { $0.1 }
-//    }
-    
-//    private func filSelectedDays() {
-//        guard task != nil else { return }
-//        gu
-//        selectedDays =
-//
-//    }
 }
