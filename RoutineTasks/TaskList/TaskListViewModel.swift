@@ -95,8 +95,13 @@ extension TaskListViewModel: DataObserver {
     
     func didChangeData(task: Task) {
         if let index = tasks.firstIndex(of: task) {
-            tasks[index].title = task.title
-            tasks[index].color = task.color
+            print("do",tasks[index].schedule?.count)
+            tasks.remove(at: index)
+        }
+        tasks.append(task)
+        print(task.schedule?.count)
+        if let index = tasks.firstIndex(of: task) {
+            print("after",tasks[index].schedule?.count)
         }
         DispatchQueue.main.async {
             self.delegate?.dataDidChange()

@@ -25,7 +25,6 @@ protocol NewTaskViewModelProtocol {
 }
 
 class NewTaskViewModel: NewTaskViewModelProtocol {
-    
     required init(data: [Task]) {
         tasks = data
     }
@@ -68,9 +67,15 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
         storageManager.updateTask(currentTask, newTitle: name, color: color) { result in
             switch result {
             case .success(let newTask):
-                
-                storageManager.createSchedule(newTask, selectedDays: schedule) { task in
-                    observersViewModel.changeData(data: task)
+                storageManager.removeSchedule(task: newTask) { result in
+                    switch result {
+                    case .success(let taskWithoutSchedule):
+                        storageManager.createSchedule(taskWithoutSchedule, selectedDays: schedule) { task in
+                            observersViewModel.changeData(data: task)
+                        }
+                    case .failure(let error):
+                        print(error)
+                    }
                 }
             case .failure(let error):
                 print(error)
@@ -143,8 +148,8 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
     func getSchedule(dayWeek: Int) -> Bool {
         guard task != nil else { return true }
         if let scheduleTemp = task?.schedule?.allObjects as? [Schedule] {
-            let scheduleTemp = scheduleTemp.map { ($0.day ) }
-            schedule = scheduleTemp.map { Int($0) }
+            let scheduleArray = scheduleTemp.map { ($0.day ) }
+            schedule = scheduleArray.map { Int($0) }
         }
         guard schedule.contains(dayWeek) else { return false }
         return true
@@ -155,4 +160,11 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
         let activeDaysWeekFiltered = activeDaysWeek.filter { $0.0 == true }
         schedule = activeDaysWeekFiltered.map { $0.1 }
     }
+    
+//    private func filSelectedDays() {
+//        guard task != nil else { return }
+//        gu
+//        selectedDays =
+//        
+//    }
 }

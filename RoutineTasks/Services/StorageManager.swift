@@ -66,8 +66,8 @@ class StorageManager {
             )
             let objects = try viewContext.fetch(fetchRequest)
             guard let task = objects.first else {
-            //написать ошибку
-            return }
+                //написать ошибку
+                return }
             task.title = newTitle
             task.color = color
             saveContext()
@@ -92,6 +92,26 @@ class StorageManager {
             saveContext()
         }
         completion(task)
+    }
+    
+    func removeSchedule(task: Task, completion: (Result<Task, Error>) -> Void) {
+        let fetchRequest = Task.fetchRequest()
+        
+        do {
+            fetchRequest.predicate = NSPredicate(
+                format: "title == %@", task.title
+            )
+            let objects = try viewContext.fetch(fetchRequest)
+            guard let task = objects.first else {
+                //написать ошибку
+                return }
+            guard let schedule = task.schedule else { return }
+            task.removeFromSchedule(schedule)
+            saveContext()
+            completion(.success(task))
+        } catch let error {
+            completion(.failure(error))
+        }
     }
     
     
