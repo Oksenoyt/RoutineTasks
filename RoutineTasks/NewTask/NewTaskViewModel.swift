@@ -22,6 +22,7 @@ protocol NewTaskViewModelProtocol {
     func selectedDaysDidChange(day: Int) -> Bool
     func chooseColor(_ sender: Int) -> String
     func getColorButton() -> Int
+    
 }
 
 class NewTaskViewModel: NewTaskViewModelProtocol {
