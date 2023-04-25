@@ -131,29 +131,23 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
     }
     
     func checkUniqueName(nameNewTask: String, isChange: String?) -> Bool {
-        if isChange != "" {
-            for task in tasks {
-                if task.title == nameNewTask {
-                    return false
-                }
+        guard isChange != "" else { return true }
+        for task in tasks {
+            if task.title == nameNewTask {
+                return false
             }
-            return true
         }
         return true
     }
     
     func getSchedule(dayWeek: Int) -> Bool {
         guard task != nil else { return true }
-        
         if let scheduleTemp = task?.schedule?.allObjects as? [Schedule] {
             let scheduleTemp = scheduleTemp.map { ($0.day ) }
             schedule = scheduleTemp.map { Int($0) }
         }
-
-        if schedule.contains(dayWeek) {
-            return true
-        }
-        return false
+        guard schedule.contains(dayWeek) else { return false }
+        return true
     }
     
     private func filSchedule() {
