@@ -6,16 +6,33 @@
 //
 
 import UIKit
+import UserNotifications
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+//    let center = UNUserNotificationCenter.current()
+//
+//    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+//        center.requestAuthorization(options: [.alert, .sound, .alert]) { granted, error in
+//            guard granted else { return }
+//            self.center.getNotificationSettings { (settings) in
+//                guard settings.authorizationStatus == .authorized else { return }
+//            }
+//        }
+//        return true
+//    }
+    var window: UIWindow?
+    let notifications = LocalNotification()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        notifications.notificationCenter.delegate = notifications
+        notifications.userRequest()
+        
         return true
     }
+    
 
     // MARK: UISceneSession Lifecycle
 

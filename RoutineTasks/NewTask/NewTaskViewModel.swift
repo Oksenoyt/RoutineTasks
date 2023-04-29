@@ -16,6 +16,7 @@ protocol NewTaskViewModelProtocol {
     init(data: [Task])
 
     func getSchedule(dayWeek: Int) -> Bool
+    func createNotifications(title: String, time: Date)
     func checkNameTFFilled(title: String?, placeholder: String? ) -> String?
     func checkUniqueName(nameNewTask: String, isChange: String?) -> Bool
     func addTask(name: String, color: String)
@@ -47,6 +48,7 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
     private let observersViewModel = ObserversViewModel.shared
     private let storageManager = StorageManager.shared
     private let date = DateManager()
+    private let notifications = LocalNotification()
     
     private var schedule = [0, 1, 2, 3, 4, 5, 6]
     private var task: Task?
@@ -64,16 +66,7 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
         storageManager.updateTask(currentTask, newTitle: name, color: color) { result in
             switch result {
             case .success(let newTask):
-                storageManager.removeSchedule(task: newTask) { result in
-                    switch result {
-                    case .success(let taskWithoutSchedule):
-                        storageManager.createSchedule(taskWithoutSchedule, selectedDays: schedule) { task in
-                            observersViewModel.changeData(data: task)
-                        }
-                    case .failure(let error):
-                        print(error)
-                    }
-                }
+                replaseSchedule(task: newTask)
             case .failure(let error):
                 print(error)
             }
@@ -138,6 +131,16 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
         return sender
     }
     
+    func getSchedule(dayWeek: Int) -> Bool {
+        guard task != nil else { return true }
+        if let scheduleTemp = task?.schedule?.allObjects as? [Schedule] {
+            let scheduleArray = scheduleTemp.map { ($0.day ) }
+            schedule = scheduleArray.map { Int($0) }
+        }
+        guard schedule.contains(dayWeek) else { return false }
+        return true
+    }
+    
     func checkUniqueName(nameNewTask: String, isChange: String?) -> Bool {
         guard isChange != "" else { return true }
         for task in tasks {
@@ -148,13 +151,37 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
         return true
     }
     
-    func getSchedule(dayWeek: Int) -> Bool {
-        guard task != nil else { return true }
-        if let scheduleTemp = task?.schedule?.allObjects as? [Schedule] {
-            let scheduleArray = scheduleTemp.map { ($0.day ) }
-            schedule = scheduleArray.map { Int($0) }
+    func createNotifications(title: String, time: Date) {
+        let time = date.getTime(currentDate: time)
+        for day in getWeekday() {
+            let dateComponents = date.getDateComponents(weekday: day, hour: time[0], minute: time[1])
+            notifications.addNotification(title: "\(title) day \(day)", dataComponents: dateComponents)
         }
-        guard schedule.contains(dayWeek) else { return false }
-        return true
+        
+    }
+
+    private func getWeekday() -> [Int] {
+        var weekday: [Int] = []
+        for day in schedule {
+            if day < 6 {
+                weekday.append(day + 2)
+            } else {
+                weekday.append(1)
+            }
+        }
+        return weekday
+    }
+    
+    private func replaseSchedule(task: Task) {
+        storageManager.removeSchedule(task: task) { result in
+            switch result {
+            case .success(let taskWithoutSchedule):
+                storageManager.createSchedule(taskWithoutSchedule, selectedDays: schedule) { task in
+                    observersViewModel.changeData(data: task)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }

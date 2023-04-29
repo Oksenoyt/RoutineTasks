@@ -35,6 +35,7 @@ class TaskListViewController: UIViewController {
         
         taskListTableView.backgroundColor = #colorLiteral(red: 0.9536015391, green: 0.9351417422, blue: 0.9531318545, alpha: 1)
         taskListTableView.layer.cornerRadius = 30
+        taskListTableView.bounces = false
         navigationItem.rightBarButtonItems = [addNewItemButton, editButtonItem]
         setCalendar()
     }

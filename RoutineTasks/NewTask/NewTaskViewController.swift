@@ -10,8 +10,11 @@ import UIKit
 class NewTaskViewController: UIViewController {
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet var itemColorStackButton: [UIButton]!
-    @IBOutlet weak var notificationTextField: UITextField!
     @IBOutlet var scheduleStackButton: [UIButton]!
+
+    @IBOutlet weak var notificationSwitch: UISwitch!
+    
+    @IBOutlet weak var notificationDatePicker: UIDatePicker!
     @IBOutlet weak var createButton: UIButton!
     
     var viewModel: NewTaskViewModelProtocol!
@@ -19,7 +22,6 @@ class NewTaskViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.layer.cornerRadius = 30
         setFormSettings()
     }
     
@@ -36,8 +38,19 @@ class NewTaskViewController: UIViewController {
         }
     }
     
+    @IBAction func notificationToggle(_ sender: Any) {
+        notificationDatePicker.isEnabled.toggle()
+        if notificationDatePicker.isEnabled {
+//            it doesn't work
+//            notificationDatePicker.setValue(UIColor.white, forKeyPath: "textColor")
+        } else {
+            notificationDatePicker.tintColor = .gray
+        }
+        
+    }
     
     @IBAction func createButton(_ sender: UIButton) {
+        //переделать на убирание таргета с поля
         guard let name = viewModel.checkNameTFFilled(
             title: nameTextField.text,
             placeholder: nameTextField.placeholder
@@ -45,6 +58,9 @@ class NewTaskViewController: UIViewController {
             showAlert(with: "Введите название задачи")
             return
         }
+        
+        viewModel.createNotifications(title: name, time: notificationDatePicker.date)
+        
         if viewModel.checkUniqueName(nameNewTask: name, isChange: nameTextField.text) {
             viewModel.addTask(name: name, color: color)
             dismiss(animated: true)
@@ -55,15 +71,17 @@ class NewTaskViewController: UIViewController {
     }
 
     private func setFormSettings() {
+        view.layer.cornerRadius = 30
         setSettingsNameTF()
         setSettingsColorButton(tagButton: viewModel.getColorButton())
         setSettingsCreateButton()
+        setSettingsNotification()
         setSettingsScheduleButton()
     }
     
     private func setSettingsNameTF() {
         nameTextField.layer.masksToBounds = true
-        nameTextField.layer.cornerRadius = 30
+        nameTextField.layer.cornerRadius = 15
         nameTextField.clearButtonMode = .whileEditing
         nameTextField.becomeFirstResponder()
         nameTextField.placeholder = viewModel.taskName
@@ -85,11 +103,6 @@ class NewTaskViewController: UIViewController {
         itemColorStackButton[tagButton].layer.borderWidth = 3.0
     }
     
-    private func setSettingsCreateButton() {
-        createButton.layer.cornerRadius = 15
-        createButton.setTitle(viewModel.createButton, for: .normal)
-    }
-    
     private func setSettingsScheduleButton() {
         for dayButton in scheduleStackButton {
             if viewModel.getSchedule(dayWeek: dayButton.tag) {
@@ -98,6 +111,26 @@ class NewTaskViewController: UIViewController {
                 dayButton.tintColor = .gray
             }
         }
+    }
+    
+    private func setSettingsNotification() {
+//        notificationDatePicker.timeZone = TimeZone.current // установите часовой пояс datePicker на часовой пояс устройства
+//
+//        let date = notificationDatePicker.date // получите дату из datePicker
+//
+//        let calendar = Calendar.current
+//        let hour = calendar.component(.hour, from: date)
+//        let minute = calendar.component(.minute, from: date)
+//
+//        print(date)
+//        print(viewModel.getNoticatoinDate(hour: hour, minute: minute))
+//        print(DateManager().triggerNotificationWeekly)
+    }
+    
+    private func setSettingsCreateButton() {
+        createButton.layer.cornerRadius = 15
+        createButton.setTitle(viewModel.createButton, for: .normal)
+        
     }
 }
 

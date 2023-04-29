@@ -8,10 +8,10 @@
 import Foundation
 
 class DateManager {
-    
     private let date = Date()
     private let calendar = Calendar.current
-    
+
+    //e,hfnm
     var currentDate: Date {
         date.dayBefore(value: 0)
     }
@@ -19,6 +19,33 @@ class DateManager {
     enum formatDate {
         case yyyyMMdd
         case d_EE
+    }
+
+    
+    func getTime(currentDate: Date) -> [Int] {
+        var timeComponent: [Int] = []
+        let hour = calendar.component(.hour, from: currentDate)
+        let minute = calendar.component(.minute, from: currentDate)
+        timeComponent.append(hour)
+        timeComponent.append(minute)
+        return timeComponent
+    }
+    
+    func getNotificationDate(weekday: Int, hour: Int, minute: Int) -> Date {
+        var dateComponents = DateComponents()
+        dateComponents.hour = hour
+        dateComponents.minute = minute
+        dateComponents.weekday = weekday
+        guard let nextNotification = calendar.nextDate(after: date, matching: dateComponents, matchingPolicy: .nextTime, repeatedTimePolicy: .first, direction: .forward) else { return date }
+        return nextNotification
+    }
+    
+    func getDateComponents(weekday: Int, hour: Int, minute: Int) -> DateComponents {
+        var dateComponents = DateComponents()
+        dateComponents.hour = hour
+        dateComponents.minute = minute
+        dateComponents.weekday = weekday
+        return dateComponents
     }
     
     func getDateString(dayBefore: Int, format: formatDate ) -> String {
