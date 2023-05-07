@@ -16,7 +16,7 @@ protocol NewTaskViewModelProtocol {
     init(data: [Task])
 
     func getSchedule(dayWeek: Int) -> Bool
-    func createNotifications(title: String, time: Date)
+    func createNotifications(title: String, time: Date, toggle: Bool)
     func checkNameTFFilled(title: String?, placeholder: String? ) -> String?
     func checkUniqueName(nameNewTask: String, isChange: String?) -> Bool
     func addTask(name: String, color: String)
@@ -151,11 +151,12 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
         return true
     }
     
-    func createNotifications(title: String, time: Date) {
+    func createNotifications(title: String, time: Date, toggle: Bool) {
+        guard toggle else { return }
         let time = date.getTime(currentDate: time)
         for day in getWeekday() {
             let dateComponents = date.getDateComponents(weekday: day, hour: time[0], minute: time[1])
-            notifications.addNotification(title: "\(title) day \(day)", dataComponents: dateComponents)
+            notifications.addNotification(title: title, id: "\(title) day \(day)", dataComponents: dateComponents)
         }
         
     }

@@ -44,7 +44,7 @@ class NewTaskViewController: UIViewController {
 //            it doesn't work
 //            notificationDatePicker.setValue(UIColor.white, forKeyPath: "textColor")
         } else {
-            notificationDatePicker.tintColor = .gray
+//            notificationDatePicker.tintColor = .gray
         }
         
     }
@@ -59,7 +59,7 @@ class NewTaskViewController: UIViewController {
             return
         }
         
-        viewModel.createNotifications(title: name, time: notificationDatePicker.date)
+        viewModel.createNotifications(title: name, time: notificationDatePicker.date, toggle: notificationSwitch.isOn)
         
         if viewModel.checkUniqueName(nameNewTask: name, isChange: nameTextField.text) {
             viewModel.addTask(name: name, color: color)
@@ -114,17 +114,7 @@ class NewTaskViewController: UIViewController {
     }
     
     private func setSettingsNotification() {
-//        notificationDatePicker.timeZone = TimeZone.current // установите часовой пояс datePicker на часовой пояс устройства
-//
-//        let date = notificationDatePicker.date // получите дату из datePicker
-//
-//        let calendar = Calendar.current
-//        let hour = calendar.component(.hour, from: date)
-//        let minute = calendar.component(.minute, from: date)
-//
-//        print(date)
-//        print(viewModel.getNoticatoinDate(hour: hour, minute: minute))
-//        print(DateManager().triggerNotificationWeekly)
+
     }
     
     private func setSettingsCreateButton() {

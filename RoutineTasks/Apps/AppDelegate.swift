@@ -10,18 +10,7 @@ import UserNotifications
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-//    let center = UNUserNotificationCenter.current()
-//
-//    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-//        center.requestAuthorization(options: [.alert, .sound, .alert]) { granted, error in
-//            guard granted else { return }
-//            self.center.getNotificationSettings { (settings) in
-//                guard settings.authorizationStatus == .authorized else { return }
-//            }
-//        }
-//        return true
-//    }
+    
     var window: UIWindow?
     let notifications = LocalNotification()
 
@@ -33,6 +22,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        print("asdasdasd")
+        UIApplication.shared.applicationIconBadgeNumber = 0
+    }
+
 
     // MARK: UISceneSession Lifecycle
 
