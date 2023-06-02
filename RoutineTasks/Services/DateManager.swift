@@ -12,9 +12,9 @@ class DateManager {
     private let calendar = Calendar.current
 
     //e,hfnm
-    var currentDate: Date {
-        date.dayBefore(value: 0)
-    }
+//    var currentDate: Date {
+//        date.dayBefore(value: 0)
+//    }
     
     enum formatDate {
         case yyyyMMdd
@@ -73,7 +73,7 @@ class DateManager {
     }
     
     func dayBefore(value: Int) -> Date {
-        Calendar.current.date(byAdding: .day, value: value, to: Date())!
+        Calendar.current.date(byAdding: .day, value: value, to: date)!
     }
 }
 
