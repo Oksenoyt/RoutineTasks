@@ -37,7 +37,7 @@ class NewTaskViewModel: NewTaskViewModelProtocol {
     }
     
     var taskName: String {
-        return task?.title ?? ""
+        task?.title ?? ""
     }
     
     var createButton: String {
