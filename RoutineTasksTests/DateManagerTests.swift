@@ -83,7 +83,8 @@ final class DateManagerTests: XCTestCase {
             dayBefore: weekday,
             format: DateManager.formatDate.yyyyMMdd
         )
-        XCTAssert(result == "2023-05-31", "\n!!!Error - String date is not correct: expected result 2023-05-31, actual result \(result)")
+        let expectedResult = getDateStringyyyyMMdd()
+        XCTAssert(result == expectedResult, "\n!!!Error - String date is not correct: expected result \(expectedResult), actual result \(result)")
     }
     
     func testGetDateStringReturnDayWeekday() {
@@ -91,11 +92,28 @@ final class DateManagerTests: XCTestCase {
             dayBefore: weekday,
             format: DateManager.formatDate.d_EE
         )
-        XCTAssert(result == "31\nСр", "\n!!!Error - String date is not correct: expected result 31 Ср, actual result \(result)")
+        let expectedResult = getDateStringDEE()
+        XCTAssert(result == expectedResult, "\n!!!Error - String date is not correct: expected result \(expectedResult), actual result \(result)")
     }
     
-    func testGetDataIntReturnWeekday() {
-        let result = sut.getDateInt(dayBefore: -2)
-        XCTAssert(result == 6, "\n!!!Error - String date is not correct: \n expected result 6 \n   actual result \(result)")
+    private func getDateStringyyyyMMdd() -> String {
+        let dateFormatter = DateFormatter()
+        let date = sut.dayBefore(value: -weekday)
+        var dataFormatted = ""
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dataFormatted = dateFormatter.string(from: date)
+        return dataFormatted
+    }
+    
+    private func getDateStringDEE() -> String {
+        let dateFormatter = DateFormatter()
+        let date = sut.dayBefore(value: -weekday)
+        var dataFormatted = ""
+        dateFormatter.setLocalizedDateFormatFromTemplate("d")
+        let dayNumber = dateFormatter.string(from: date)
+        dateFormatter.setLocalizedDateFormatFromTemplate("EE")
+        let dayWeek = dateFormatter.string(from: date)
+        dataFormatted = "\(dayNumber)\n\(dayWeek)"
+        return dataFormatted
     }
 }

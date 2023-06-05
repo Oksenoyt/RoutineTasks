@@ -23,6 +23,7 @@ final class StorageManagerTests: XCTestCase {
 
     override func tearDownWithError() throws {
         sut.deleteTask(task)
+        task = nil
         super.tearDown()
     }
 
