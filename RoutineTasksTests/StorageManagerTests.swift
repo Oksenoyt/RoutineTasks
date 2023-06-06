@@ -133,7 +133,7 @@ final class StorageManagerTests: XCTestCase {
         sut.fetchTasks { result in
             switch result {
             case .success(let tasks):
-                task = tasks.first
+                task = tasks.last
             case .failure(let error):
                 print(error)
             }
