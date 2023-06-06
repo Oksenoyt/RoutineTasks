@@ -28,7 +28,7 @@ class LocalNotification: NSObject {
     
     func addNotification(title: String, id: String, dataComponents: DateComponents? = nil, postpone: Int = 0) {
         let content = getContent(title: title)
-        let trigger = getTrigger(postpone: 10)
+        let trigger = getTrigger(dataComponents: dataComponents, postpone: postpone)
         let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
         
         notificationCenter.add(request) { (error) in
@@ -49,7 +49,7 @@ class LocalNotification: NSObject {
         return content
     }
     
-    private func getTrigger(dataComponents: DateComponents? = nil, postpone: Int = 0) -> UNNotificationTrigger {
+    private func getTrigger(dataComponents: DateComponents? = nil, postpone: Int) -> UNNotificationTrigger {
         let trigger: UNNotificationTrigger
         if let dataComponents = dataComponents {
             trigger = UNCalendarNotificationTrigger(dateMatching: dataComponents , repeats: true)
