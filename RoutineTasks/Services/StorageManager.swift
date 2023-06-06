@@ -34,6 +34,7 @@ class StorageManager {
         let task = Task(context: viewContext)
         task.title = name
         task.color = color
+        task.order = getOrder()
         completion(task)
         
         saveContext()
@@ -41,6 +42,8 @@ class StorageManager {
     
     func fetchTasks(completion: (Result<[Task], Error>) -> Void) {
         let fetchRequest = Task.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "order", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
         do {
             let tasks = try viewContext.fetch(fetchRequest)
             completion(.success(tasks))
@@ -48,14 +51,6 @@ class StorageManager {
             completion(.failure(error))
         }
     }
-    
-    //    func updateTask(_ taskList: [Task], sourceIndexPath: Int, destinationIndexPath: Int, completion: ([Task]) -> Void) {
-    //        let taskList: [Task] = taskList
-    //        taskList[sourceIndexPath].id = Int16(destinationIndexPath)
-    //        taskList[destinationIndexPath].id = Int16(sourceIndexPath)
-    //        completion(taskList)
-    //        saveContext()
-    //    }
     
     func updateTask(_ task: Task, newTitle: String, color: String, completion: (Result<Task, Error>) -> Void) {
         let fetchRequest = Task.fetchRequest()
@@ -74,6 +69,24 @@ class StorageManager {
             completion(.success(task))
         } catch let error {
             completion(.failure(error))
+        }
+    }
+    
+    func updateOrderOfTask(_ task: Task, order: Int16) {
+        let fetchRequest = Task.fetchRequest()
+        do {
+            fetchRequest.predicate = NSPredicate(
+                format: "title == %@", task.title
+            )
+            let objects = try viewContext.fetch(fetchRequest)
+            guard let cuttrentTask = objects.first else {
+               // todo
+                return }
+            cuttrentTask.order = order
+            saveContext()
+            updateOrderOfTask(order: order, task: task)
+        } catch let error {
+            print(error)
         }
     }
     
@@ -142,19 +155,35 @@ class StorageManager {
         saveContext()
     }
     
+    private func getOrder() -> Int16 {
+        var order: Int16 = 0
+        fetchTasks { result in
+            switch result {
+            case .success(let tasks):
+                order = Int16(tasks.count)
+            case .failure(let error):
+                print(error)
+            }
+        }
+        return order
+    }
     
-    
-    
-    //    func fetchSchedule(task: Task, completion: (Result<[Schedule], Error>) -> Void) {
-    //        let fetchRequest = Schedule.fetchRequest()
-    //        fetchRequest.predicate = NSPredicate(format: "(task = %@)", task)
-    //        do {
-    //            let schedule = try viewContext.fetch(fetchRequest)
-    //            completion(.success(schedule))
-    //        } catch let error {
-    //            completion(.failure(error))
-    //        }
-    //    }
+    private func updateOrderOfTask(order: Int16, task: Task) {
+        let fetchRequest = Task.fetchRequest()
+        do {
+            let tasks = try viewContext.fetch(fetchRequest)
+            for currentTask in tasks {
+                if currentTask != task {
+                    if currentTask.order >= order {
+                        currentTask.order += Int16(1)
+                        saveContext()
+                    }
+                }
+            }
+        } catch let error {
+            print(error)
+        }
+    }
     
     
     // MARK: - Core Data Saving support

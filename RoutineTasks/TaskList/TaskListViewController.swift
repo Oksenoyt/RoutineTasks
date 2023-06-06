@@ -112,8 +112,9 @@ extension TaskListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        //                StorageManager.shared.updateTask(taskList, sourceIndexPath: sourceIndexPath.row, destinationIndexPath: destinationIndexPath.row) { tasks in
-        //                    taskList = tasks
+        viewModel.updateOrderOfTask(sourceOrder: sourceIndexPath.row, destinationOrder: destinationIndexPath.row)
+//        let currentTrack = trackList.remove(at: sourceIndexPath.row)
+//        trackList.insert(currentTrack, at: destinationIndexPath.row)
     }
 }
 

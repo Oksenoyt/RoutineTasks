@@ -18,6 +18,7 @@ protocol TaskListViewModelProtocol {
     func getTasks() -> NewTaskViewModelProtocol
     
     func getCalendar(days: Int) -> [String]
+    func updateOrderOfTask(sourceOrder: Int, destinationOrder: Int)
 }
 
 class TaskListViewModel: TaskListViewModelProtocol {
@@ -79,6 +80,12 @@ class TaskListViewModel: TaskListViewModelProtocol {
             dayLabels.append(label)
         }
         return dayLabels
+    }
+    
+    func updateOrderOfTask(sourceOrder: Int, destinationOrder: Int) {
+        let currentTrack = tasks.remove(at: sourceOrder)
+        tasks.insert(currentTrack, at: destinationOrder)
+        storageManager.updateOrderOfTask(currentTrack, order: Int16(destinationOrder + 1))
     }
 }
 

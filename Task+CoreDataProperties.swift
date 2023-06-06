@@ -18,6 +18,7 @@ extension Task {
 
     @NSManaged public var color: String
     @NSManaged public var title: String
+    @NSManaged public var order: Int16
     @NSManaged public var completionDay: NSSet?
     @NSManaged public var schedule: NSSet?
 
