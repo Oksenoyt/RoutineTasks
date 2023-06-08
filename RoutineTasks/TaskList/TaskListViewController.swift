@@ -29,7 +29,8 @@ class TaskListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        settingsButton.isEnabled = false
+        
         let observersViewModel = ObserversViewModel.shared
         viewModel = TaskListViewModel(observersViewModel: observersViewModel)
         
@@ -53,6 +54,8 @@ class TaskListViewController: UIViewController {
             if dayLabel.tag == 3 {
                 dayLabel.font = .boldSystemFont(ofSize: 19)
             }
+            dayLabel.adjustsFontSizeToFitWidth = true
+            dayLabel.minimumScaleFactor = 0.5
         }
     }
     

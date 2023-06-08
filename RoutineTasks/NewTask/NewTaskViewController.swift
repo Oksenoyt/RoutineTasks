@@ -11,7 +11,7 @@ class NewTaskViewController: UIViewController {
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet var itemColorStackButton: [UIButton]!
     @IBOutlet var scheduleStackButton: [UIButton]!
-
+    
     @IBOutlet weak var notificationSwitch: UISwitch!
     
     @IBOutlet weak var notificationDatePicker: UIDatePicker!
@@ -23,6 +23,7 @@ class NewTaskViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setFormSettings()
+        self.nameTextField.delegate = self
     }
     
     @IBAction func getColor(_ sender: UIButton) {
@@ -41,10 +42,10 @@ class NewTaskViewController: UIViewController {
     @IBAction func notificationToggle(_ sender: Any) {
         notificationDatePicker.isEnabled.toggle()
         if notificationDatePicker.isEnabled {
-//            it doesn't work
-//            notificationDatePicker.setValue(UIColor.white, forKeyPath: "textColor")
+            //            it doesn't work
+            //            notificationDatePicker.setValue(UIColor.white, forKeyPath: "textColor")
         } else {
-//            notificationDatePicker.tintColor = .gray
+            //            notificationDatePicker.tintColor = .gray
         }
         
     }
@@ -69,7 +70,7 @@ class NewTaskViewController: UIViewController {
         }
         
     }
-
+    
     private func setFormSettings() {
         view.layer.cornerRadius = 30
         setSettingsNameTF()
@@ -114,7 +115,7 @@ class NewTaskViewController: UIViewController {
     }
     
     private func setSettingsNotification() {
-
+        
     }
     
     private func setSettingsCreateButton() {
@@ -132,5 +133,14 @@ extension NewTaskViewController {
         alert.addAction(okAction)
         
         present(alert, animated: true)
+    }
+}
+
+extension NewTaskViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let currentText = textField.text else { return true }
+        let newLength = currentText.count + string.count - range.length
+        
+        return newLength <= 11
     }
 }
